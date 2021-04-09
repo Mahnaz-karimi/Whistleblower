@@ -1,0 +1,12 @@
+
+{% block content %}
+    <case class="media content-section">
+        <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}"> <!-- den vil vise billed af den user som har oploadet under hver post i home page.-->
+          <div class="media-body">
+            <div class="article-metadata">
+            </div>
+            <h2 class="article-title" >{{ object.title }}></h2>
+            <p class="article-content">{{ object.description }}</p>
+          </div>
+        </case>
+{% endblock content %}
