@@ -36,6 +36,7 @@ SECRET_KEY = '4m36=!pu9kdjug0zkn8cm3!q19)3u)f=sc@1!qr)cqa%4fk-uw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# DEBUG = (os.environ.get('DEBUG_VALUE' == 'True')
 ALLOWED_HOSTS = ['m-whistleblower.com']
 # ALLOWED_HOSTS = []
 

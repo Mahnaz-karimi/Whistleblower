@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from case.models import Case, CaseInfo, Status, Media
-import uuid
+# import uuid
 from django.views.generic import (
     ListView,
     DetailView,  # når vil kigges efter detail of post
@@ -19,11 +19,6 @@ def home(request):
     return render(request, "case/case.html", context)
 '''
 
-c = Case.objects.get(id=1)
-dorte = Media.objects.filter(case=c)
-for item in dorte:
-    print("dorteeeeei:", item)
-
 
 class CaseListView(ListView):
     model = Case
@@ -41,7 +36,6 @@ class CaseCreateView(CreateView):
     case_info = CaseInfo.objects.create(status=status)
     model = Case(case_info)
     fields = ['title', 'description']
-
 
     '''def form_valid(self, form):
         form.instance.author = self.request.user  # tjekker at den er aktuelle user

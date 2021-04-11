@@ -45,7 +45,7 @@ class Case(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     created = models.DateField(auto_now_add=True)
-    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="caseinfo")
+    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="case_info")
 
     def __str__(self):
         return self.title
@@ -58,8 +58,8 @@ class Media(models.Model):
     filename = models.CharField(max_length=200)
     time_of_delete = models.DateField(auto_now=True, blank=True, null=True)
     created = models.DateField(auto_now_add=True)
-    images = models.FileField(upload_to="images", blank=True)
-    case = models.ForeignKey(Case, on_delete=models.CASCADE, related_name="case")
+    # images = models.FileField(upload_to="images", blank=True)
+    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="caseinfo")
 
     class Meta:
         verbose_name = "media"
@@ -93,4 +93,6 @@ status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     e = Case.objects.get(id=3)
     print("caseinfoooooo:", e.case_info_id)
     c = CaseInfo.objects.get(pk=1)
+    c = Case.objects.get(id=1)
+Mediaforocase = Media.objects.filter(case=c)
 '''
