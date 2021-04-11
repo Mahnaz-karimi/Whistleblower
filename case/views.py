@@ -32,8 +32,8 @@ class CaseDetailView(DetailView):
 
 
 class CaseCreateView(CreateView):
-    status = Status.objects.create()
-    case_info = CaseInfo.objects.create(status=status)
+    # status = Status.objects.create()
+    # case_info = CaseInfo.objects.create(status=status)
     model = Case
     fields = ['title', 'description']
 
