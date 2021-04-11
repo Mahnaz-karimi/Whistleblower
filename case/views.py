@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from case.models import Case, CaseInfo, Status, Media
+from case.models import Case, CaseInfo, Status
 # import uuid
 from django.views.generic import (
     ListView,
