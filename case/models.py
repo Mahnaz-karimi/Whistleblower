@@ -45,7 +45,7 @@ class Case(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     created = models.DateField(auto_now_add=True)
-    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="case_info")
+    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="case_case_info")
 
     def __str__(self):
         return self.title
@@ -59,7 +59,7 @@ class Media(models.Model):
     time_of_delete = models.DateField(auto_now=True, blank=True, null=True)
     created = models.DateField(auto_now_add=True)
     # images = models.FileField(upload_to="images", blank=True)
-    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="caseinfo")
+    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="media_case_info")
 
     class Meta:
         verbose_name = "media"

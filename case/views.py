@@ -34,7 +34,7 @@ class CaseDetailView(DetailView):
 class CaseCreateView(CreateView):
     status = Status.objects.create()
     case_info = CaseInfo.objects.create(status=status)
-    model = Case(case_info)
+    model = Case
     fields = ['title', 'description']
 
     '''def form_valid(self, form):
