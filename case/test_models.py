@@ -1,8 +1,12 @@
+'''
+
 from django.test import TestCase
 from datetime import date
 import uuid
 from case.models import Case, Media, Status, CaseInfo
+'''
 
+'''
 
 class CaseModelTest(TestCase):
 
@@ -80,3 +84,5 @@ class CaseModelTest(TestCase):
 
     def test_status_created_str(self):
         self.assertEqual(str(self.status1), dict(Status.CASESTATUS)[Status.NEW])
+
+'''
