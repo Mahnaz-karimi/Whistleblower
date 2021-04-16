@@ -40,7 +40,7 @@ jobs:
         coverage report
     - name: Django Testing
       run: |
-        python3 manage.py test case
+        python3 manage.py test
     - name: Deploy to Heroku
       env:
         HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
