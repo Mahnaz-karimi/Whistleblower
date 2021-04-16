@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'caseworker.apps.CaseworkerConfig',
     'crispy_forms',
     'storages',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,3 +143,8 @@ AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 django_heroku.settings(locals())
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}

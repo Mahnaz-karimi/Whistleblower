@@ -1,5 +1,6 @@
 # from django.shortcuts import render
 from case.models import Case
+# from django.shortcuts import redirect, render
 # import uuid
 from django.views.generic import (
     ListView,
@@ -9,15 +10,6 @@ from django.views.generic import (
     # DeleteView
 )
 # from django.http import HttpResponse
-
-'''
-def home(request):
-    context = {
-        "cases": Case.objects.all()
-        # "cases": Case.objects.filter(title="file").order_by('case_post')[:2]  # kallder alle ellementer
-    }
-    return render(request, "case/case.html", context)
-'''
 
 
 class CaseListView(ListView):
@@ -40,3 +32,13 @@ class CaseCreateView(CreateView):
     '''def form_valid(self, form):
         form.instance.author = self.request.user  # tjekker at den er aktuelle user
         return super().form_valid(form)'''
+
+
+'''
+def home(request):
+    context = {
+        "cases": Case.objects.all()
+        # "cases": Case.objects.filter(title="file").order_by('case_post')[:2]  # kallder alle ellementer
+    }
+    return render(request, "case/case.html", context)
+'''

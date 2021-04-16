@@ -1,8 +1,7 @@
 from django.contrib import admin
-from case.models import Case, Media, CaseInfo, Status
+from case.models import Case, CaseInfo, Status
 
 admin.site.register(Case)
-admin.site.register(Media)
 admin.site.register(CaseInfo)
 admin.site.register(Status)
 

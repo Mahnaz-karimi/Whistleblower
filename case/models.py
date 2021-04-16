@@ -54,28 +54,9 @@ class Case(models.Model):
         return reverse('case:case-detail', kwargs={'pk': self.pk})
 
 
-class Media(models.Model):
-    filename = models.CharField(max_length=200)
-    time_of_delete = models.DateField(auto_now=True, blank=True, null=True)
-    created = models.DateField(auto_now_add=True)
-    # images = models.FileField(upload_to="images", blank=True)
-    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="media_case_info")
-
-    class Meta:
-        verbose_name = "media"
-        verbose_name_plural = "media"
-
-    def __str__(self):  # return the name we will object calls
-        return self.filename
-
-
 '''
-
-# from django import forms
-# from django.utils import timezone
 # uuid = uuid.uuid4()
 # print (uuid_nr.default())
-
 
 status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
@@ -95,4 +76,18 @@ status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     c = CaseInfo.objects.get(pk=1)
     c = Case.objects.get(id=1)
 Mediaforocase = Media.objects.filter(case=c)
+
+class Media(models.Model):
+    filename = models.CharField(max_length=200)
+    time_of_delete = models.DateField(auto_now=True, blank=True, null=True)
+    created = models.DateField(auto_now_add=True)
+    # images = models.FileField(upload_to="images", blank=True)
+    case_info = models.ForeignKey(CaseInfo, on_delete=models.CASCADE, related_name="media_case_info")
+
+    class Meta:
+        verbose_name = "media"
+        verbose_name_plural = "media"
+
+    def __str__(self):  # return the name we will object calls
+        return self.filename
 '''

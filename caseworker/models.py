@@ -6,15 +6,15 @@ import uuid
 
 
 class Country(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=35)
 
     def __str__(self):
         return self.name
 
 
 class PostalCode(models.Model):
-    post_code = models.CharField(max_length=255)
-    city_name = models.CharField(max_length=255)
+    post_code = models.CharField(max_length=35)
+    city_name = models.CharField(max_length=35)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="country")
 
     def __str__(self):  # return the name we will object calls
@@ -22,7 +22,7 @@ class PostalCode(models.Model):
 
 
 class Address(models.Model):
-    street = models.CharField(max_length=255)
+    street = models.CharField(max_length=100)
     post_code = models.ForeignKey(PostalCode, on_delete=models.CASCADE, related_name="postalcode")
 
     def __str__(self):
@@ -30,7 +30,7 @@ class Address(models.Model):
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=35)
     guid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="address")
 
