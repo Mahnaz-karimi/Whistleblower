@@ -35,7 +35,7 @@ class CaseInfo(models.Model):
 
     # company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="company")
     # caseworker = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="caseworker", null=True)
-    status = models.ForeignKey(Status, on_delete=models.DO_NOTHING, related_name="status_name")
+    status = models.ForeignKey(Status, on_delete=models.DO_NOTHING, related_name="status_name", default= "Sagen er nyoprettet")
 
     def __str__(self):  # return the name we will object calls
         return str(self.guid)
