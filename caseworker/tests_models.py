@@ -33,8 +33,15 @@ class CaseModelTest(TestCase):
     def test_postal_code_has_postal_code(self):
         self.assertIsInstance(self.postal_code_t.city_name, str)
 
+    def test_postal_code_postal_code(self):
+        self.assertEqual(self.postal_code_t.post_code, '2500')
+
     def test_postal_code_has_country(self):
         self.assertIsInstance(self.postal_code_t.country.name, str)
+
+    def test_postal_code_country(self):
+        self.assertEqual(self.postal_code_t.country.name, 'Denmark')
+
 '''
 # Test that Case has title of type str
     def test_case_has_title(self):
