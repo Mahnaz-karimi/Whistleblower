@@ -1,5 +1,4 @@
 from django.test import TestCase
-from datetime import date
 import uuid
 from caseworker.models import Country, PostalCode, Address, Company
 
@@ -7,10 +6,10 @@ from caseworker.models import Country, PostalCode, Address, Company
 class CaseModelTest(TestCase):
 
     def setUp(self):
-        self.county_name_t = Country.objects.create(name='Denmark')
+        self.country_name_t = Country.objects.create(name='Denmark')
 
         self.postal_code_t = PostalCode.objects.create(
-            post_code='2500', city_name='Valby', country=self.county_name_t
+            post_code='2500', city_name='Valby', country=self.country_name_t
         )
 
         self.address_t = Address.objects.create(
@@ -22,13 +21,17 @@ class CaseModelTest(TestCase):
             address=self.address_t
         )
 
-    # Test that Status has a status of type str
     def test_country_has_name(self):
-        self.assertIsInstance(self.county_name_t.name, str)
+        self.assertIsInstance(self.country_name_t.name, str)
 
-    # Test that CaseInfo has guid of type uuid.UUID
+    def test_country_name(self):
+        self.assertEqual(self.country_name_t.name, 'Denmark')
+
     def test_postal_code_has_city_name(self):
         self.assertIsInstance(self.postal_code_t.post_code, str)
+
+    def test_postal_code_city_name(self):
+        self.assertEqual(self.postal_code_t.city_name, 'Valby')
 
     def test_postal_code_has_postal_code(self):
         self.assertIsInstance(self.postal_code_t.city_name, str)
@@ -42,31 +45,35 @@ class CaseModelTest(TestCase):
     def test_postal_code_country(self):
         self.assertEqual(self.postal_code_t.country.name, 'Denmark')
 
-'''
-# Test that Case has title of type str
-    def test_case_has_title(self):
-        self.assertIsInstance(self.case1.title, str)
+    def test_address_has_street(self):
+        self.assertIsInstance(self.address_t.street, str)
 
-    # Test that Case has description of type str
-    def test_case_has_description(self):
-        self.assertIsInstance(self.case1.description, str)
+    def test_address_street(self):
+        self.assertEqual(self.address_t.street, 'nybrovej 14')
 
-    # Test that Case has created timestamp of type date
-    def test_case_has_created(self):
-        self.assertIsInstance(self.case1.created, date)
+    def test_address_has_postcode(self):
+        self.assertIsInstance(self.address_t.post_code.city_name, str)
 
-    # Test that __str__ is implemented on Case
-    def test_case_title(self):
-        self.assertEqual(str(self.case1.title), 'Unit test case title 1')
+    def test_address_postcode(self):
+        self.assertEqual(self.address_t.post_code.city_name, 'Valby')
 
-    # Test that created is set to today on Case
-    def test_case_created_date(self):
-        self.assertEqual(str(self.case1.created), str(date.today()))
+    def test_company_has_name(self):
+        self.assertIsInstance(self.company_t.name, str)
 
-    # Test that default value is NEW
-    def test_status_created(self):
-        self.assertEqual(self.status1.status, Status.NEW)
+    def test_company_name(self):
+        self.assertEqual(self.company_t.name, 'Enkelte styresle')
 
-    def test_status_created_str(self):
-        self.assertEqual(str(self.status1), dict(Status.CASESTATUS)[Status.NEW])
-'''
+    def test_company_has_guid(self):
+        self.assertIsInstance(self.company_t.guid, uuid.UUID)
+
+    def test_company_has_address_street(self):
+        self.assertEqual(self.company_t.address.street, 'nybrovej 14')
+
+    def test_company_address_street(self):
+        self.assertIsInstance(self.company_t.address.street, str)
+
+    def test_company_has_address_postcode(self):
+        self.assertEqual(self.company_t.address.post_code.post_code, '2500')
+
+    def test_company_address_postcode(self):
+        self.assertIsInstance(self.company_t.address.post_code.post_code, str)

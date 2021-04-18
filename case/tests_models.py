@@ -43,7 +43,7 @@ class CaseModelTest(TestCase):
 
     # Test that __str__ is implemented on Case
     def test_case_title(self):
-        self.assertEqual(str(self.case1.title), 'Unit test case title 1')
+        self.assertEqual(self.case1.title, 'Unit test case title 1')
 
     # Test that created is set to today on Case
     def test_case_created_date(self):
@@ -59,7 +59,7 @@ class CaseModelTest(TestCase):
     def test_case_instance(self):
         self.assertTrue(isinstance(self.case1, Case))
 
-    def test_case_title(self):
+    def test_case1_title(self):
         self.assertEqual(str(self.case1), "Unit test case title 1")
 
 
