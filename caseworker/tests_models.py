@@ -77,3 +77,15 @@ class CaseModelTest(TestCase):
 
     def test_company_address_postcode(self):
         self.assertIsInstance(self.company_t.address.post_code.post_code, str)
+
+    def test_company_has_address_city_name(self):
+        self.assertEqual(self.company_t.address.post_code.city_name, 'Valby')
+
+    def test_company_address_city_name(self):
+        self.assertIsInstance(self.company_t.address.post_code.city_name, str)
+
+    def test_company_has_address_country(self):
+        self.assertEqual(self.company_t.address.post_code.country.name, 'Denmark')
+
+    def test_company_address_country(self):
+        self.assertIsInstance(self.company_t.address.post_code.country.name, str)
