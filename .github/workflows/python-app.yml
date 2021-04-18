@@ -31,9 +31,9 @@ jobs:
       with:
         postgresql version: '11'
     - name: Run migrations
-      run: python manage.py migrate
+      run: python3 manage.py migrate
     - name: Run tests
-      run: python manage.py test
+      run: python3 manage.py test case
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
