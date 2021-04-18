@@ -56,6 +56,12 @@ class CaseModelTest(TestCase):
     def test_status_created_str(self):
         self.assertEqual(str(self.status1), dict(Status.CASESTATUS)[Status.NEW])
 
+    def test_case_instance(self):
+        self.assertTrue(isinstance(self.case1, Case))
+
+    def test_case_title(self):
+        self.assertEqual(str(self.case1), "Unit test case title 1")
+
 
 '''
     self.media1 = Media.objects.create(
