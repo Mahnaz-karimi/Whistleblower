@@ -63,30 +63,4 @@ class CaseModelTest(TestCase):
         self.assertEqual(str(self.case1), "Unit test case title 1")
 
 
-'''
-    self.media1 = Media.objects.create(
-                filename='Unit test media filename 1',
-                time_of_delete=None,
-                case=self.case1
-            )
-    # Test that Media has a filename of type str
-    def test_media_has_filename(self):
-        self.assertIsInstance(self.media1.filename, str)
 
-    # Test that Media has a time_of_delete of type date
-    def test_media_has_time_of_delete(self):
-        self.media1.time_of_delete = date.today()
-        self.assertIsInstance(self.media1.time_of_delete, date)
-
-    # Test that Media has a created of type date
-    def test_media_has_created(self):
-        self.assertIsInstance(self.media1.created, date)
-    # Test that __str__ is implemented on Media
-    def test_media_title(self):
-        self.assertEqual(str(self.media1.filename), 'Unit test media filename 1')
-
-    # Test that created is set to today on Media
-    def test_media_created(self):
-        self.assertEqual(str(self.media1.created), str(date.today()))
-
-'''

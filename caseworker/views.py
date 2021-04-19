@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from caseworker.models import CaseworkerAdmin
+from case.forms import CaseworkerAdmin
 
 
 def register(request):

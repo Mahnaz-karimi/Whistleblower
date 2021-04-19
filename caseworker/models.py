@@ -1,7 +1,4 @@
-from django import forms
 from django.db import models
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 import uuid
 
 
@@ -37,12 +34,3 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
-
-class CaseworkerAdmin(UserCreationForm):
-    email = forms.EmailField()
-    address = models.OneToOneField(Address, on_delete=models.DO_NOTHING, related_name="address")
-    company = models.ManyToManyField(Company)
-
-    class Meta:
-        model = User
-        fields = ['username', 'first_name', 'last_name']
