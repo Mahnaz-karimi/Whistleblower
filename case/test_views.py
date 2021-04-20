@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from case.models import Case, CaseInfo, Status
 from caseworker.models import Company, Country, PostalCode, Address
 from django.urls import reverse
+from django.views.generic import TemplateView
 
 
 class TestCaseView(TestCase):
@@ -36,10 +37,19 @@ class TestCaseView(TestCase):
             title='Unit test case title 1',
             description='Unit test case description 1',
             case_info=self.case_info1)
-        # self.case1.save()
+        self.case1.save()
 
-    def test_CaseListView(self):
-        response = self.client.get(reverse('list'))
+    class HomeView(TemplateView):
+        template_name = 'case/case.html'
 
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'case/case.html')
+        def get_context_data(self, **kwargs):
+            kwargs['environment'] = 'Production'
+            return super().get_context_data(**kwargs)
+
+            print("helllloooo", self.case1)
+
+        def test_CaseListView(self):
+            response = self.client.get(reverse('list'))
+
+            self.assertEquals(response.status_code, 200)
+            self.assertTemplateUsed(response, 'case/case.html')
