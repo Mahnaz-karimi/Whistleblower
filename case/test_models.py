@@ -10,7 +10,6 @@ class CaseModelTest(TestCase):
     def setUp(self):
 
         self.country_name1 = Country.objects.create(name='Denmark')
-
         self.postal_code1 = PostalCode.objects.create(
             post_code='2500', city_name='Valby', country=self.country_name1
         )
@@ -36,7 +35,6 @@ class CaseModelTest(TestCase):
             description='Unit test case description 1',
             case_info=self.case_info1
         )
-
 
     # Test that Status has a status of type str
     def test_status_has_status(self):
@@ -78,6 +76,3 @@ class CaseModelTest(TestCase):
 
     def test_case1_title(self):
         self.assertEqual(str(self.case1), "Unit test case title 1")
-
-
-
