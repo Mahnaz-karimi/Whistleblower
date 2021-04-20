@@ -3,6 +3,7 @@ from case.models import Case, CaseInfo, Status
 from caseworker.models import Company, Country, PostalCode, Address
 from django.urls import reverse
 from django.views.generic import TemplateView
+from case.views import CaseListView
 
 
 class TestCaseView(TestCase):
@@ -48,7 +49,7 @@ class TestCaseView(TestCase):
 
             print("helllloooo", self.case1)
 
-        def test_CaseListView(self):
+        def test_case_listview(self):
             response = self.client.get(reverse('list'))
 
             self.assertEquals(response.status_code, 200)
