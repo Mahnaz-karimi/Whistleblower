@@ -3,7 +3,7 @@ from case.models import Case, CaseInfo, Status
 from caseworker.models import Company, Country, PostalCode, Address
 from django.urls import reverse
 from django.views.generic import TemplateView
-from case.views import CaseListView
+# from case.views import CaseListView
 
 
 class TestCaseView(TestCase):
@@ -43,7 +43,7 @@ class TestCaseView(TestCase):
     class HomeView(TemplateView):
         template_name = 'case/case.html'
 
-        def get_context_data(self, **kwargs):
+        def test_case_view(self, **kwargs):
             kwargs['environment'] = 'Production'
             return super().get_context_data(**kwargs)
 

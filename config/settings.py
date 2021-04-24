@@ -92,7 +92,7 @@ DATABASES = {
             'NAME': 'wb',
             'USER': 'postgres',
             'PASSWORD': 'hest3fiskesovs',
-            'HOST': '127.0.0.1',
+            'HOST': 'localhost',
             'PORT': '5432',
         }
 }
