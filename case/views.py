@@ -1,5 +1,6 @@
 # from django.shortcuts import render
-from case.models import Case
+from case.models import Case  # , Status, CaseInfo, Company
+# from caseworker.models import Country, Company,PostalCode,Address
 # from django.shortcuts import redirect, render
 # import uuid
 from django.views.generic import (
@@ -29,10 +30,11 @@ class CaseCreateView(CreateView):
     model = Case
     fields = ['title', 'description']
 
-    '''def form_valid(self, form):
+
+'''
+    def form_valid(self, form):
         form.instance.author = self.request.user  # tjekker at den er aktuelle user
         return super().form_valid(form)'''
-
 
 '''
 def home(request):
