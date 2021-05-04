@@ -28,7 +28,7 @@ class CaseCreateView(CreateView):
     # status = Status.objects.create()
     # case_info = CaseInfo.objects.create(status=status)
     model = Case
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'case_info']
 
 
 '''
