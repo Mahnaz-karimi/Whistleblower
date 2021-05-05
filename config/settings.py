@@ -21,8 +21,18 @@ import django_heroku
 if(os.path.exists('/etc/config.json')):
     with open('/etc/config.json') as config_file:
         config = json.load(config_file)
+        EMAIL_HOST_USER = config.get('EMAIL_USER')
+        EMAIL_HOST_PASSWORD = config.get('EMAIL_PASS')
+        AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
+        AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
 else:
     SECRET_KEY = '4m36=!pu9kdjug0zkn8cm3!q19)3u)f=sc@1!qr)cqa%4fk-uw'
+    EMAIL_HOST_USER = 'test@yahoo.com'
+    EMAIL_HOST_PASSWORD = 'testpassword'
+    AWS_ACCESS_KEY_ID =  'testacceskey'
+    AWS_SECRET_ACCESS_KEY = 'secretacceskey'
+    AWS_STORAGE_BUCKET_NAME = 'test'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,8 +44,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '4m36=!pu9kdjug0zkn8cm3!q19)3u)f=sc@1!qr)cqa%4fk-uw'
-SECRET_KEY = config.get('SECRET_KEY')
-
+# SECRET_KEY = config.get('SECRET_KEY')
 # SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -156,13 +165,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-EMAIL_HOST_USER = config.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = config.get('EMAIL_PASS')
 
-
-AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
