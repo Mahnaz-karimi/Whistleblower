@@ -16,8 +16,13 @@ import os
 import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # import storages.backends.s3boto3
-with open('/etc/config.json') as config_file:
-    config = json.load(config_file)
+
+if (os.path.exists('/etc/config.json')):
+
+    with open('/etc/config.json') as config_file:
+        config = json.load(config_file)
+else:
+    SECRET_KEY = '4m36=!pu9kdjug0zkn8cm3!q19)3u)f=sc@1!qr)cqa%4fk-uw'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # BASE_DIR = Path(__file__).resolve().parent.parent
