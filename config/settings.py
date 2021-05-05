@@ -30,7 +30,7 @@ else:
     SECRET_KEY = '4m36=!pu9kdjug0zkn8cm3!q19)3u)f=sc@1!qr)cqa%4fk-uw'
     EMAIL_HOST_USER = 'test@yahoo.com'
     EMAIL_HOST_PASSWORD = 'testpassword'
-    AWS_ACCESS_KEY_ID =  'testacceskey'
+    AWS_ACCESS_KEY_ID = 'testacceskey'
     AWS_SECRET_ACCESS_KEY = 'secretacceskey'
     AWS_STORAGE_BUCKET_NAME = 'test'
 
