@@ -26,15 +26,6 @@ jobs:
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:10.8
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: hest3fiskesovs
-          POSTGRES_DB: wb
-        ports:
-          - 5432:5432
     steps:    
     - uses: actions/checkout@v2 
     - run: |
