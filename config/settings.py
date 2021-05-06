@@ -1,11 +1,9 @@
 import json
 import os
 import django_heroku
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# import storages.backends.s3boto3
 
 
-if(os.path.exists('/etc/config.json')):
+if os.path.exists('/etc/config.json'):
     with open('/etc/config.json') as config_file:
         config = json.load(config_file)
         SECRET_KEY = config.get('SECRET_KEY')
@@ -44,29 +42,15 @@ else:
         }
     }
 
-
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '4m36=!pu9kdjug0zkn8cm3!q19)3u)f=sc@1!qr)cqa%4fk-uw'
-# SECRET_KEY = config.get('SECRET_KEY')
-# SECRET_KEY = os.environ.get('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
 
 # DEBUG = (os.environ.get('DEBUG_VALUE' == 'True')
 ALLOWED_HOSTS = ['m-whistleblower.com']
 # ALLOWED_HOSTS = []
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -110,10 +94,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
 # Password validation
