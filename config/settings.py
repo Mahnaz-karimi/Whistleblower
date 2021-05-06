@@ -26,13 +26,13 @@ if(os.path.exists('/etc/config.json')):
             }
         }
 else:
-    SECRET_KEY = os.environ.get('SECRET_KEY'),
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER'),
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD'),
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID'),
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY'),
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME'),
-    DEBUG = os.environ.get('DEBUG_VALUE'),
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+    DEBUG = os.environ.get('DEBUG_VALUE')
     DATABASES = {
         'default': {
             'ENGINE': os.environ.get('DB_ENGINE'),
