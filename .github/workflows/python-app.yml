@@ -56,7 +56,8 @@ jobs:
     - name: Coverage Report
       run: |
         pip install coverage
-        coverage run manage.py test
+        # coverage run manage.py test
+        coverage run --source='.' manage.py test caseworker
         coverage report    
     - name: Deploy to Heroku
       env:
