@@ -2,16 +2,13 @@ from django.test import TestCase, Client
 from case.models import Case, CaseInfo, Status
 from caseworker.models import Company, Country, PostalCode, Address
 from django.urls import reverse
-# from django.views.generic import TemplateView
-# from case.views import CaseListView
 
 
 class TestCaseView(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.list_url = reverse('list')
-        self.detail_url = reverse('detail', args=['case1'])
+
         self.country_name1 = Country.objects.create(
             name='Denmark'
         )
@@ -24,32 +21,47 @@ class TestCaseView(TestCase):
             street='nybrovej 14',
             post_code=self.postal_code1
         )
+
         self.company1 = Company.objects.create(
             name='microsof',
             address=self.address1
         )
 
         self.status1 = Status.objects.create()
-        self.case_info1 = CaseInfo.object.create(
+        self.case_info1 = CaseInfo.objects.create(
             status=self.status1,
             company=self.company1
         )
         self.case1 = Case.objects.create(
             title='Unit test case title 1',
             description='Unit test case description 1',
-            case_info=self.case_info1)
+            case_info=self.case_info1
+        )
         self.case1.save()
 
-        # template_name = 'case/case.html'
+    def test_case_local(self):
+        response = self.client.get('127.0.0.1:8000')
+        self.assertEquals(response.status_code, 404)
+        # self.assertTemplateUsed(response, 'case/case.html')
 
-    def test_case_view(self, **kwargs):
-        kwargs['environment'] = 'Production'
-        return super().get_context_data(**kwargs)
-
-        print("helllloooo", self.case1)
-
-    def test_case_listview(self):
-        response = self.client.get(reverse('list'))
-
+    def test_CaseListView_Get(self):
+        response = self.client.get('')
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'case/case.html')
+
+    def test_CaseCreateView_Post(self):
+        self.detail_url = reverse('case:case-create')
+        response = self.client.post(self.detail_url, {
+            'title': 'Unit test case title 1',
+            'description': 'Unit test case description 1',
+            'case_info': self.case_info1
+        })
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'case/case_form.html')
+
+    def test_CaseDetailView_Post(self):
+        self.detail_url = reverse('case:case-view')
+        case_id = Case.objects.latest('pk')
+        response = self.client.post(self.detail_url, kwargs={'pk': case_id})
+        self.assertEquals(response.status_code, 405)
+        self.assertEquals(self.case1.case_info.company.name, 'microsof')

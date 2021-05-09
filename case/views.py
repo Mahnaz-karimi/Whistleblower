@@ -1,16 +1,10 @@
-# from django.shortcuts import render
 from case.models import Case  # , Status, CaseInfo, Company
-# from caseworker.models import Country, Company,PostalCode,Address
-# from django.shortcuts import redirect, render
-# import uuid
+
 from django.views.generic import (
     ListView,
-    DetailView,  # når vil kigges efter detail of post
+    DetailView,
     CreateView,
-    # UpdateView,
-    # DeleteView
 )
-# from django.http import HttpResponse
 
 
 class CaseListView(ListView):
@@ -22,21 +16,19 @@ class CaseListView(ListView):
 
 class CaseDetailView(DetailView):
     model = Case
+    template_name = 'case/case_detail.html'
 
 
 class CaseCreateView(CreateView):
     # status = Status.objects.create()
     # case_info = CaseInfo.objects.create(status=status)
+    template_name = 'case/case_form.html'
     model = Case
     fields = ['title', 'description', 'case_info']
 
 
 '''
-    def form_valid(self, form):
-        form.instance.author = self.request.user  # tjekker at den er aktuelle user
-        return super().form_valid(form)'''
-
-'''
+from django.shortcuts import redirect, render
 def home(request):
     context = {
         "cases": Case.objects.all()

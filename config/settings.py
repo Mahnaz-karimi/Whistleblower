@@ -1,7 +1,7 @@
 import json
 import os
 import django_heroku
-
+# import storages.backends.s3boto3
 
 if (os.path.exists('/etc/config.json')):
     with open('/etc/config.json') as config_file:
