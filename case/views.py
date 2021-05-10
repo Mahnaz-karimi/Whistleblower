@@ -20,8 +20,6 @@ class CaseDetailView(DetailView):
 
 
 class CaseCreateView(CreateView):
-    # status = Status.objects.create()
-    # case_info = CaseInfo.objects.create(status=status)
     template_name = 'case/case_form.html'
     model = Case
     fields = ['title', 'description', 'case_info']

@@ -39,11 +39,6 @@ class TestCaseView(TestCase):
         )
         self.case1.save()
 
-    def test_case_local(self):
-        response = self.client.get('127.0.0.1:8000')
-        self.assertEquals(response.status_code, 404)
-        # self.assertTemplateUsed(response, 'case/case.html')
-
     def test_CaseListView_Get(self):
         response = self.client.get('')
         self.assertEquals(response.status_code, 200)
@@ -62,6 +57,6 @@ class TestCaseView(TestCase):
     def test_CaseDetailView_Post(self):
         self.detail_url = reverse('case:case-view')
         case_id = Case.objects.latest('pk')
-        response = self.client.post(self.detail_url, kwargs={'pk': case_id})
-        self.assertEquals(response.status_code, 405)
+        response = self.client.get(self.detail_url, kwargs={'pk': case_id})
+        self.assertEquals(response.status_code, 200)
         self.assertEquals(self.case1.case_info.company.name, 'microsof')

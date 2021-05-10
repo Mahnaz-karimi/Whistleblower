@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 22,
+  "agentName": "deployment",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelines.actions.githubusercontent.com/Ery60csdqtdxb1wcz5icsqcKWEpnh23WNUZJyHw52QA5YY06AG",
+  "gitHubUrl": "https://github.com/mmmnaz/Whistle_blower",
+  "workFolder": "deploy"
+}
