@@ -25,7 +25,11 @@ jobs:
       DEBUG_VALUE: ${{ secrets.DEBUG_VALUE }}
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted # ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12x]
+        
     steps:    
     - uses: actions/checkout@v2 
     - run: |
