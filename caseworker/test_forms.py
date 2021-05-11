@@ -1,6 +1,6 @@
 from django.test import TestCase
 from caseworker.forms import CaseworkerAdmin
-from caseworker.models import Company, Country, PostalCode, Address
+# from caseworker.models import Company, Country, PostalCode, Address
 
 
 class TestForms(TestCase):
@@ -10,7 +10,7 @@ class TestForms(TestCase):
             'username': 'Mahn',
             'first_name': 'Test123',
             'last_name': 'Test123',
-            'password1':'test123',
+            'password1': 'test123',
             'password2': 'test123',
             'email': 'mahnaazi@yahoo.com',
 
@@ -22,4 +22,3 @@ class TestForms(TestCase):
         form = CaseworkerAdmin(data={})
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 4)
-
