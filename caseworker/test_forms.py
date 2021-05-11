@@ -12,10 +12,10 @@ class TestForms(TestCase):
             'last_name': 'Test123',
             'password1': 'test123',
             'password2': 'test123',
-            'email': 'mahnaazi@yahoo.com',
+            'email': 'mahnaazi@yahoo.com'
 
         })
-        print("helllllloo", CaseworkerAdmin)
+        print("helllllloo", form)
         self.assertFalse(form.is_valid())
 
     def test_CaseworkerAdmin_no_data(self):
