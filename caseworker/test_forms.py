@@ -57,7 +57,7 @@ class TestForms(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 4)
 
-    def test_CaseworkerAdmin_no_data(self):
+    def test_CaseworkerAdmin_no_3_data(self):
         form = CaseworkerAdmin(data={'email': 'mahnaazi@yahoo.com'})
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 3)
