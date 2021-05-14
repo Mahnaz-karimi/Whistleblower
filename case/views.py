@@ -1,7 +1,7 @@
 from case.models import Case  # , Status, CaseInfo, Company
-from django.shortcuts import redirect, render
-from case.forms import AnonymousForm
-from caseworker.models import Company
+# from django.shortcuts import redirect, render
+# from case.forms import AnonymousForm
+# from caseworker.models import Company
 from django.views.generic import (
     ListView,
     DetailView,
@@ -25,6 +25,7 @@ class CaseCreateView(CreateView):
     template_name = 'case/case_form.html'
     model = Case
     fields = ['title', 'description', 'case_info']
+
 
 '''
 
