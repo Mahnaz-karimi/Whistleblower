@@ -13,6 +13,7 @@ if (os.path.exists('/etc/config.json')):
         AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
         AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
         DEBUG = config.get('DEBUG_VALUE')
+        ALLOWED_HOSTS = config.get('ALLOWED_HOSTS')
         DATABASES = {
             'default': {
                 'ENGINE': config.get('DB_ENGINE'),
@@ -44,11 +45,6 @@ else:
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# DEBUG = (os.environ.get('DEBUG_VALUE' == 'True')
-ALLOWED_HOSTS = config.get('ALLOWED_HOSTS')
-
 
 # Application definition
 INSTALLED_APPS = [
