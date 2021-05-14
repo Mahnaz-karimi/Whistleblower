@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ master ]
+    branches: [ integration ]
   pull_request:
-    branches: [ master ]
+    branches: [ integration ]
 
 jobs:
   build:
@@ -26,7 +26,7 @@ jobs:
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
       
-    runs-on: self-hosted # ubuntu-latest
+    runs-on: ubuntu-latest
     
     strategy:
       matrix:
@@ -34,7 +34,6 @@ jobs:
     steps:    
     - uses: actions/checkout@v2 
     - run: |
-        echo "line 30"
         git fetch --prune --unshallow
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
