@@ -25,7 +25,9 @@ jobs:
       DEBUG_VALUE: ${{ secrets.DEBUG_VALUE }}
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      
     runs-on: self-hosted # ubuntu-latest
+    
     strategy:
       matrix:
         python-version: [3.8]        
