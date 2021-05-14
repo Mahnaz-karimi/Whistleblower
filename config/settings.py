@@ -47,8 +47,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # DEBUG = (os.environ.get('DEBUG_VALUE' == 'True')
-ALLOWED_HOSTS = ['m-whistleblower.com']
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config.get('ALLOWED_HOSTS')
+
 
 # Application definition
 INSTALLED_APPS = [
