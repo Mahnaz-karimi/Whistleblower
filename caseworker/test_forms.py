@@ -56,7 +56,7 @@ class TestForms(TestCase):
             'email': 'mahnaazi@yahoo.com'
 
         })
-        print("print form : ", form)
+        # print("print form : ", form)
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors), 1)
 
