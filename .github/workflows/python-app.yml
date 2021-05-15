@@ -26,7 +26,7 @@ jobs:
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
       
-    runs-on: ubuntu-latest # self-hosted 
+    runs-on: self-hosted # ubuntu-latest
     
     strategy:
       matrix:
