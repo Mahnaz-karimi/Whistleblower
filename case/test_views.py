@@ -60,3 +60,8 @@ class TestCaseView(TestCase):
         response = self.client.get(self.detail_url, kwargs={'pk': case_id})
         self.assertEquals(response.status_code, 200)
         self.assertEquals(self.case1.case_info.company.name, 'microsof')
+
+    def test_index_loads_properly(self):
+        """The index page loads properly"""
+        response = self.client.get('127.0.0.1:8000')
+        self.assertEqual(response.status_code, 404)

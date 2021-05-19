@@ -28,4 +28,4 @@ class TestCaseworkerRegister(TestCase):
             'email': 'username@yahoo.com'
         })
         self.assertEquals(response.status_code, 302)
-        # self.assertTemplateUsed(response, 'case/')
+        # self.assertTemplateUsed(response, 'case/case.html')
