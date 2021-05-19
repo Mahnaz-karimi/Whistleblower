@@ -39,8 +39,6 @@ jobs:
           flake8 caseworker --count --select=E9,F4,F6,F8 --show-source --statistics
       - name: Unittest
         run: |
-          python3 manage.py test case
-          python3 manage.py test caseworker
           coverage run manage.py test case
           coverage report
           coverage run manage.py test caseworker
