@@ -4,7 +4,7 @@
        <case>
            <h1><a href="{% url 'case:case-detail' case.id %}">{{case.title}}</a></h1>
            <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
-           <p>{{case.case_info}}</p>
+           <p>{{case.case_info}}</p> 
            <p>  {{case.description}}</p>
        </case>
     {% endfor %}
