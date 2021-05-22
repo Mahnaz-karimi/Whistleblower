@@ -1,4 +1,3 @@
-
 <center><!-- lægger den i midden -->
     {% for case in Case %}
        <case>
@@ -6,6 +5,7 @@
            <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
            <p>{{case.case_info}}</p>
            <p>  {{case.description}}</p>
+           <p>  {{case.case_info.status}}</p>
        </case>
     {% endfor %}
 </center>

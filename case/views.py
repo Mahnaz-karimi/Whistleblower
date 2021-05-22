@@ -2,10 +2,12 @@ from case.models import Case  # , Status, CaseInfo, Company
 # from django.shortcuts import redirect, render
 # from case.forms import AnonymousForm
 # from caseworker.models import Company
+
 from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
+    DeleteView,
 )
 
 
@@ -27,6 +29,11 @@ class CaseCreateView(CreateView):
     fields = ['title', 'description', 'case_info']
 
 
+class CaseDeleteView(DeleteView):
+    model = Case
+    success_url = '/'
+
+
 '''
 
 def case_form_view(request):
@@ -46,15 +53,16 @@ def case_form_view(request):
             except:
                 return redirect('home_view')
 
+
     home_context = {
 
     }
 
     return render(request, "home.html", home_context)
 
-
-
 from django.shortcuts import redirect, render
+
+
 def home(request):
     context = {
         "cases": Case.objects.all()

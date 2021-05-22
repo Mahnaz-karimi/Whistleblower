@@ -76,4 +76,3 @@ class CaseModelTest(TestCase):
 
     def test_case1_title(self):
         self.assertEqual(str(self.case1), "Unit test case title 1")
-
