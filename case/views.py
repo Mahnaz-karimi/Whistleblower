@@ -1,4 +1,4 @@
-from case.models import Case  # , Status, CaseInfo, Company
+from case.models import Case, Status  # , CaseInfo, Company
 # from django.shortcuts import redirect, render
 # from case.forms import AnonymousForm
 # from caseworker.models import Company
@@ -22,6 +22,12 @@ class CaseDetailView(DetailView):
     model = Case
     template_name = 'case/case_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        deletable_state = Status.CASESTATUS[0][1]
+        context['deletable'] = (str(self.object.case_info.status) == deletable_state)
+        return context
+
 
 class CaseCreateView(CreateView):
     template_name = 'case/case_form.html'
@@ -35,7 +41,8 @@ class CaseDeleteView(DeleteView):
 
 
 '''
-
+from django.contrib.auth.decorators import login_required
+@login_required
 def case_form_view(request):
     anonymous_form = AnonymousForm(request.POST or None)
     request.session['company_guid'] = 'invalid'
