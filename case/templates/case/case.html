@@ -1,19 +1,18 @@
 {% extends "case/base.html" %}
 {% block content %}
-<center><!-- lægger den i midden -->
     {% for case in Case %}
 
        <case class="media content-section">
             <div class="media-body">
-            <div class="article-metadata">
-           <h1><a href="{% url 'case:case-detail' case.id %}">{{case.title}}</a></h1>
-           <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
+                <div class="article-metadata">
+                    <h1><a href="{% url 'case:case-detail' case.id %}">{{case.title}}</a></h1>
+                    <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
                 </div>
-           <h10><a class="article-title" href="#">{{case.case_info}}</a></h10>
-           <p>  {{case.description}}</p>
-           <p>  {{case.case_info.status}}</p>
+                <h10><a class="article-title" href="#">{{case.case_info}}</a></h10>
+                <p>{{case.case_info}}</p>
+                <p>  {{case.description}}</p>
+                <p>  {{case.case_info.status}}</p>
             </div>
        </case>
     {% endfor %}
-</center>
 {% endblock content %}
