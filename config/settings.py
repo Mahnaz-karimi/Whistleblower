@@ -145,4 +145,4 @@ GRAPH_MODELS = {
     'group_models': True,
 }
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/case/'
