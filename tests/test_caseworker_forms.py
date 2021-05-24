@@ -25,7 +25,7 @@ class TestForms(TestCase):
         })
         # print("print form : ", form)
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)  # Der er en enkelt fejl
+        self.assertEqual(len(form.errors), 1)  # Der er en enkelt fejl
 
     def test_CaseworkerAdmin_form_not_valid_without_mail(self):
         form = CaseworkerAdmin(data={
@@ -36,7 +36,7 @@ class TestForms(TestCase):
         })
         # print("print form : ", form)
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 1)
 
     def test_CaseworkerAdmin_form_not_valid_with_wrong_password(self):
         form = CaseworkerAdmin(data={
@@ -56,16 +56,16 @@ class TestForms(TestCase):
             'email': 'mahnaazi@yahoo.com'
 
         })
-        print("print form : ", form)
+        # print("print form : ", form)
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 1)
 
     def test_CaseworkerAdmin_no_data(self):
         form = CaseworkerAdmin(data={})
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 4)
+        self.assertEqual(len(form.errors), 4)
 
     def test_CaseworkerAdmin_no_3_data(self):
         form = CaseworkerAdmin(data={'email': 'mahnaazi@yahoo.com'})
         self.assertFalse(form.is_valid())
-        self.assertEquals(len(form.errors), 3)
+        self.assertEqual(len(form.errors), 3)

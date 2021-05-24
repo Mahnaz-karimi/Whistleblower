@@ -41,7 +41,7 @@ class TestCaseView(TestCase):
 
     def test_CaseListView_Get(self):
         response = self.client.get('')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'case/case.html')
 
     def test_CaseCreateView_Post(self):
@@ -51,12 +51,34 @@ class TestCaseView(TestCase):
             'description': 'Unit test case description 1',
             'case_info': self.case_info1
         })
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'case/case_form.html')
 
     def test_CaseDetailView_Post(self):
         self.detail_url = reverse('case:case-view')
+        print("helllloooooo", self.detail_url)
         case_id = Case.objects.latest('pk')
         response = self.client.get(self.detail_url, kwargs={'pk': case_id})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.case1.case_info.company.name, 'microsof')
+    '''
+    def test_CaseDetailView_Post(self):
+        self.detail_url = reverse('case:case-detail', args='1')
+        print("hhhhhhhhhhh", self.detail_url)
+        self.case_id = Case.objects.latest('pk')
+        response = self.client.get(self.detail_url, kwargs={'pk': self.case_id})
+        print("Hellllll", response.client)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(self.case1.case_info.company.name, 'microsof')
+
+    def test_CaseDeleteView_Post(self):
+
+        case_id = Case.objects.latest('pk')
+        self.detail_url = reverse('case:case-delete', args='1')
+        print("Hellllll",self.detail_url)
+        response = self.client.get(self.detail_url, kwargs={'pk': case_id})
+        print("Hellllll", response)
+        self.assertEquals(response.status_code, 200)
+        # self.assertEquals(self.case1.case_info.company.name, 'microsof')
+
+'''
