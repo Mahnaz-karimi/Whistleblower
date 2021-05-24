@@ -25,7 +25,7 @@ jobs:
       DEBUG_VALUE: ${{ secrets.DEBUG_VALUE }}
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
-      
+      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
     runs-on: ubuntu-latest
     
     strategy:

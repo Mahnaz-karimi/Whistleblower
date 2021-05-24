@@ -32,7 +32,7 @@ else:
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     DEBUG = os.environ.get('DEBUG_VALUE')
-    ALLOWED_HOSTS = ['whistleblowertest.herokuapp.com']
+    ALLOWED_HOSTS = ['ALLOWED_HOSTS']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
