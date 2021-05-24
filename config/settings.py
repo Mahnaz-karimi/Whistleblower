@@ -32,6 +32,7 @@ else:
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     DEBUG = os.environ.get('DEBUG_VALUE')
+    ALLOWED_HOSTS = ['www.reporteasily.com', '172.104.154.174']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
