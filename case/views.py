@@ -36,8 +36,9 @@ class CaseCreateView(CreateView):
 
 
 class CaseDeleteView(DeleteView):
+    template_name = 'case/case_confirm_delete.html'
     model = Case
-    success_url = '/'
+    success_url = '/case'
 
 
 '''
