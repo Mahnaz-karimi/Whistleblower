@@ -44,7 +44,6 @@ class TestCaseView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'case/case.html')
 
-
     def test_Case_CreateView_Post(self):
         self.detail_url = reverse('case:case-create')
         response = self.client.post(self.detail_url, {
