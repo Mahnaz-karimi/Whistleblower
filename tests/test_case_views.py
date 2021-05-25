@@ -39,12 +39,13 @@ class TestCaseView(TestCase):
         )
         self.case1.save()
 
-    def test_CaseListView_Get(self):
-        response = self.client.get('')
+    def test_Case_ListView_Get(self):
+        response = self.client.get('/case/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'case/case.html')
 
-    def test_CaseCreateView_Post(self):
+
+    def test_Case_CreateView_Post(self):
         self.detail_url = reverse('case:case-create')
         response = self.client.post(self.detail_url, {
             'title': 'Unit test case title 1',
@@ -52,16 +53,17 @@ class TestCaseView(TestCase):
             'case_info': self.case_info1
         })
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'case/case_form.html')
 
-    def test_CaseDetailView_Post(self):
-        self.detail_url = reverse('case:case-view')
-        print("helllloooooo", self.detail_url)
+    def test_Case_DetailView_Post(self):
         case_id = Case.objects.latest('pk')
-        response = self.client.get(self.detail_url, kwargs={'pk': case_id})
+        self.detail_url = reverse('case:case-detail', args=[case_id.id])
+        response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.case1.case_info.company.name, 'microsof')
-    '''
+
+
+'''
+
     def test_CaseDetailView_Post(self):
         self.detail_url = reverse('case:case-detail', args='1')
         print("hhhhhhhhhhh", self.detail_url)
