@@ -32,15 +32,15 @@ else:
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     DEBUG = os.environ.get('DEBUG_VALUE')
-    ALLOWED_HOSTS = ['ALLOWED_HOSTS']
+    ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'wb',
-            'USER': 'postgres',
-            'PASSWORD': 'hest3fiskesovs',
-            'HOST': '172.105.74.176',
-            'PORT': '5432',
+            'ENGINE': os.environ.get('DB_ENGINE'),
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
+            'PORT': os.environ.get('DB_PORT'),
         }
     }
 
