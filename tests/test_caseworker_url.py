@@ -26,7 +26,7 @@ def test_user_register(client, user_data1):
 
 
 @pytest.mark.django_db
-def test_user_login(client, test_user, user_data2):
+def test_user_login(client, test_user_login_fixture, user_data2):
     user_model = get_user_model()
     assert user_model.objects.count() == 1
     login_url = urls.reverse('case_worker:login')
@@ -44,12 +44,24 @@ def test_user_logout(client, authenticated_user):
 
 
 @pytest.mark.django_db
-def test_user_create_db():
-    User.objects.create_user('test', 'test@test.com', 'test')
+def test_user_create_db_data():
+    User.objects.create_user('user_name')
     assert User.objects.all().count() == 1
 
 
 @pytest.mark.django_db
-def test_user_create1_db():
+def test_user1_create_db(new_user1):
+    count = User.objects.all().count()
+    assert count == 1
+
+
+@pytest.mark.django_db
+def test_user2_create_db(new_user2):
+    count = User.objects.all().count()
+    assert count == 1
+
+
+@pytest.mark.django_db
+def test_user_db_not_data():
     count = User.objects.all().count()
     assert count == 0
