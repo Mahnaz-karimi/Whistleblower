@@ -1,6 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
+
 
 @pytest.fixture
 def user_data1():
