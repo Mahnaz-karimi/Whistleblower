@@ -9,7 +9,7 @@ class TestCaseworkerRegister(TestCase):
 
     def test_register_Post_wrong(self):
 
-        self.detail_url = reverse('case_worker:register')
+        self.detail_url = reverse('caseworker:register')
         response = self.client.post(self.detail_url, {
             'username': 'username',
             'password1': 'tests123',
@@ -20,7 +20,7 @@ class TestCaseworkerRegister(TestCase):
 
     def test_register_Post_correct(self):
 
-        self.detail_url = reverse('case_worker:register')
+        self.detail_url = reverse('caseworker:register')
         print("self.detail_url :::  ", self.detail_url)
         response = self.client.post(self.detail_url, {
             'username': 'username',

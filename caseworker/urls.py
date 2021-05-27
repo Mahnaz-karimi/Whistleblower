@@ -3,7 +3,7 @@ from caseworker.views import register
 from django.contrib.auth import views as auth_views
 
 
-app_name = "case_worker"
+app_name = "caseworker"
 urlpatterns = [
     path('register/', register, name='register'),
     path('', auth_views.LoginView.as_view(template_name='caseworker/login.html'), name='login'),
