@@ -1,6 +1,5 @@
 from django.test import TestCase
 from caseworker.forms import CaseworkerAdmin
-# from caseworker.models import Company, Country, PostalCode, Address
 
 
 class TestForms(TestCase):
