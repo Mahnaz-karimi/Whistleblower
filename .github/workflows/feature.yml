@@ -35,7 +35,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
         run: |
-          countinue-on-error
+          continue-on-error
           # stop the build if there are syntax errors in case or caseworker
           flake8 case --count --select=E9,F4,F6,F8 --show-source --statistics
           flake8 caseworker --count --select=E9,F4,F6,F8 --show-source --statistics
