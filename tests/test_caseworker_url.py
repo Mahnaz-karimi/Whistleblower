@@ -51,6 +51,7 @@ def test_user_create_db_data():
 
 @pytest.mark.django_db
 def test_user1_create_db(new_user1):
+    print("new_user2:  ", new_user1)
     count = User.objects.all().count()
     assert count == 1
 
