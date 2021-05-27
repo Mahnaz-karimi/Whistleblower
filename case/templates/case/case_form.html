@@ -6,7 +6,7 @@
             {% csrf_token %}  <!-- sikre hjemmesiden -->
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Anmeldelse</legend>
-                {{ form|crispy}} <!-- bruge vertical bar charcter for at bruge a filter. som vi har brugt crispy-->
+                {{ form |crispy}} <!-- bruge vertical bar charcter for at bruge a filter. som vi har brugt crispy-->
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Indsend</button>

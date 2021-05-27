@@ -1,7 +1,5 @@
-from case.models import Case, Status  # , CaseInfo, Company
-# from django.shortcuts import redirect, render
-# from case.forms import AnonymousForm
-# from caseworker.models import Company
+from case.models import Case, Status  # CaseInfo  # , Company
+# from django import forms
 
 from django.views.generic import (
     ListView,
@@ -30,9 +28,11 @@ class CaseDetailView(DetailView):
 
 
 class CaseCreateView(CreateView):
+
     template_name = 'case/case_form.html'
     model = Case
     fields = ['title', 'description', 'case_info']
+    # widgets = {'case_info': forms.HiddenInput(instance=CaseInfo.objects.get(id=3))}
 
 
 class CaseDeleteView(DeleteView):
