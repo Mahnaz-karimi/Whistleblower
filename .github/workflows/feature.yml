@@ -36,12 +36,9 @@ jobs:
       - name: Lint with flake8
         run: |
           continue-on-error: true
-          # stop the build if there are syntax errors in case or caseworker
+          # dont stop the build if there are syntax errors in case or caseworker
           flake8 case --count --select=E9,F4,F6,F8 --show-source --statistics
           flake8 caseworker --count --select=E9,F4,F6,F8 --show-source --statistics
-      - name: Unittest
+      - name: Run pytest
         run: |
-          coverage run --branch manage.py test case
-          coverage report
-          coverage run --branch manage.py test caseworker
-          coverage report
+          pytest
