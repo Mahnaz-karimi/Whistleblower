@@ -4,7 +4,6 @@ import uuid
 from caseworker.models import Company
 from django.contrib.auth.models import User
 
-
 class Status(models.Model):
     NEW = 'Ny'
     PROCESSING = 'Behandles'
