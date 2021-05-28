@@ -41,6 +41,12 @@ class CaseDeleteView(DeleteView):
     success_url = '/case'
 
 
+class ReportCreateView(CreateView):
+    template_name = 'case/case_form.html'
+    model = Case
+    fields = ['title', 'description', 'case_info']
+
+
 '''
 from django.contrib.auth.decorators import login_required
 @login_required

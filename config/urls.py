@@ -9,6 +9,8 @@ urlpatterns = [
     path('case/',  include('case.urls')),
     path('', RedirectView.as_view(url='/caseworker/')),
     path('caseworker/', include('caseworker.urls')),
+    path('accounts/login/', RedirectView.as_view(url='/caseworker/')),
+    path('admin/login/', RedirectView.as_view(url='/caseworker/')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

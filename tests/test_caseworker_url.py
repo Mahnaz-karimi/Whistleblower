@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 def test_render_views(client, param):
     temp_url = urls.reverse(param)
     resp = client.get(temp_url)
-    assert resp.status_code == 200
+    assert resp.status_code == 302
 
 
 @pytest.mark.django_db
@@ -22,7 +22,7 @@ def test_user_register(client, user_data1):
     create_user_url = urls.reverse('caseworker:register')
     resp = client.post(create_user_url, user_data1)
     assert user_model.objects.count() == 1
-    assert resp.status_code == 302
+    assert resp.status_code == 200
 
 
 @pytest.mark.django_db

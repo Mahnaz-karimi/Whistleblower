@@ -51,12 +51,12 @@ class TestCaseView(TestCase):
             'description': 'Unit test case description 1',
             'case_info': self.case_info1
         })
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertTemplateUsed(response, 'case/case_form.html')
 
     def test_Case_DetailView_Post(self):
         case_id = Case.objects.latest('pk')
         self.detail_url = reverse('case:case-detail', args=[case_id.id])
         response = self.client.get(self.detail_url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(self.case1.case_info.company.name, 'microsof')
