@@ -41,8 +41,8 @@ class TestCaseView(TestCase):
 
     def test_Case_ListView_Get(self):
         response = self.client.get('/case/')
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'case/case.html')
+        self.assertEqual(response.status_code, 302)
+        # self.assertTemplateUsed(response, 'case/case.html')
 
     def test_Case_CreateView_Post(self):
         self.detail_url = reverse('case:case-create')
@@ -52,7 +52,7 @@ class TestCaseView(TestCase):
             'case_info': self.case_info1
         })
         self.assertEqual(response.status_code, 302)
-        self.assertTemplateUsed(response, 'case/case_form.html')
+        # self.assertTemplateUsed(response, 'case/case_form.html')
 
     def test_Case_DetailView_Post(self):
         case_id = Case.objects.latest('pk')

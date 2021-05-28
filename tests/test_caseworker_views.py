@@ -15,8 +15,8 @@ class TestCaseworkerRegister(TestCase):
             'password1': 'tests123',
             'password2': 'tests123',
         })
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'caseworker/register.html')
+        self.assertEqual(response.status_code, 302)
+        # self.assertTemplateUsed(response, 'caseworker/register.html')
 
     def test_register_Post_correct(self):
 
