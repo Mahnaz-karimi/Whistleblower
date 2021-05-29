@@ -49,7 +49,6 @@ def test_user_logout(client, authenticated_user):
     logout_url = urls.reverse('caseworker:logout')
     resp = client.get(logout_url)
     assert resp.status_code == 200
-    # assert resp.url == urls.reverse('caseworker/logout')
 
 
 @pytest.mark.django_db
