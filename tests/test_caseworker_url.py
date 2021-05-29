@@ -6,10 +6,18 @@ from django.contrib.auth.models import User
 
 @pytest.mark.parametrize('param', [
     'caseworker:register',
-    'caseworker:login',
     'caseworker:logout'
 ])
-def test_render_views(client, param):
+def test_render1_views(client, param):
+    temp_url = urls.reverse(param)
+    resp = client.get(temp_url)
+    assert resp.status_code == 302
+
+
+@pytest.mark.parametrize('param', [
+    'caseworker:login',
+])
+def test_render2_views(client, param):
     temp_url = urls.reverse(param)
     resp = client.get(temp_url)
     assert resp.status_code == 200
@@ -21,6 +29,7 @@ def test_user_register(client, user_data1):
     assert user_model.objects.count() == 0
     create_user_url = urls.reverse('caseworker:register')
     resp = client.post(create_user_url, user_data1)
+    print("client.post:  ", resp)
     # assert user_model.objects.count() == 1
     assert resp.status_code == 302
 
@@ -32,7 +41,7 @@ def test_user_login(client, test_user_login_fixture, user_data2):
     login_url = urls.reverse('caseworker:login')
     resp = client.post(login_url, data=user_data2)
     assert resp.status_code == 302
-    # assert resp.url == urls.reverse('case/')
+    assert resp.url == urls.reverse('case:case-view')
 
 
 @pytest.mark.django_db
@@ -40,7 +49,7 @@ def test_user_logout(client, authenticated_user):
     logout_url = urls.reverse('caseworker:logout')
     resp = client.get(logout_url)
     assert resp.status_code == 200
-    # assert resp.url == urls.reverse('/caseworker/logout/')
+    # assert resp.url == urls.reverse('caseworker/logout')
 
 
 @pytest.mark.django_db
