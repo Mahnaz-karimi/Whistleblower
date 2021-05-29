@@ -11,23 +11,35 @@ on:
 
 jobs:
   build:
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options:
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DB_ENGINE: django.db.backends.postgresql_psycopg2
+      DB_HOST: localhost
+      DB_NAME: postgres
+      DB_PASSWORD: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DEBUG_VALUE: True
+      ALLOWED_HOSTS: '*'
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
-      DB_ENGINE: ${{ secrets.DB_ENGINE }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DEBUG_VALUE: ${{ secrets.DEBUG_VALUE }}
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
-      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+
     runs-on: ubuntu-latest
-    
     strategy:
       matrix:
         python-version: [3.8]        
