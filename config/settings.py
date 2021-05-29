@@ -35,15 +35,19 @@ else:
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     DEBUG = os.environ.get('DEBUG_VALUE')
     ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT'),
-        }
+    DATABASES = {}
+    if 'DYNO' in os.environ:
+        DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.environ.get('DB_NAME'),
+                'USER': os.environ.get('DB_USER'),
+                'PASSWORD': os.environ.get('DB_PASSWORD'),
+                'HOST': os.environ.get('DB_HOST'),
+                'PORT': os.environ.get('DB_PORT'),
+            }
     }
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
