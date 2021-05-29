@@ -1,6 +1,7 @@
 import json
 import os
 import django_heroku
+import dj_database_url
 # import storages.backends.s3boto3
 
 
@@ -37,11 +38,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'wb',
-            'USER': 'postgres',
-            'PASSWORD': 'hest3fiskesovs',
-            'HOST': '172.105.74.176',
-            'PORT': '5432',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
+            'PORT': os.environ.get('DB_PORT'),
         }
     }
 
