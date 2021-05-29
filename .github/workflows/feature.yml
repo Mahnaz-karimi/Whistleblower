@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ 'story*', 'feature*' ]
 jobs:
-  runner-job:
+  unit-integration-test:
     runs-on: ubuntu-latest
 
     services:
