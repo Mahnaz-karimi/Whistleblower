@@ -1,9 +1,9 @@
 name: Production workflow
 on:
   push:
-    branches: ['master']
+    branches: ['master','main']
   pull_request:
-    branches: ['master']
+    branches: ['master','main']
 jobs:
   test:
     services:
@@ -64,4 +64,4 @@ jobs:
           source venv/bin/activate
           python manage.py collectstatic
           python manage.py migrate
-          systemctl restart apache2.service
+          sudo systemctl restart apache2.service
