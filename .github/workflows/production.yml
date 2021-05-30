@@ -58,6 +58,9 @@ jobs:
     steps:
       - name: Deploy
         run: |
+          rm -rf staticfiles
           git pull
+          source venv/bin/activate
+          python manage.py collectstatic
           python manage.py migrate
           systemctl restart apache2.service
