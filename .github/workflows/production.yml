@@ -64,4 +64,4 @@ jobs:
           source venv/bin/activate
           python manage.py collectstatic
           python manage.py migrate
-          sudo systemctl restart apache2.service < /home/admin/Whistle_blower/password.txt
+          sudo -S systemctl restart apache2.service < /home/admin/Whistle_blower/password.txt
