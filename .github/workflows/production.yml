@@ -58,6 +58,7 @@ jobs:
     steps:
       - name: Deploy
         run: |
+          cd /home/admin/Whistle_blower
           rm -rf staticfiles
           git pull
           source venv/bin/activate
