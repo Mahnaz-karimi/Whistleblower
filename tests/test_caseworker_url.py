@@ -4,6 +4,23 @@ import pytest
 from django.contrib.auth.models import User
 
 
+url_data = [
+    ('caseworker:register', 302),
+    ('caseworker:logout', 302),
+    ('caseworker:login', 200),
+    ('case:case-view', 302),
+    ('case:case-create', 302),
+
+]
+
+
+@pytest.mark.parametrize("u, expected", url_data)
+def test_logged_views(client, u, expected, user_data1):
+    temp_url = urls.reverse(u)
+    resp = client.get(temp_url)
+    assert resp.status_code == expected
+
+
 @pytest.mark.parametrize('param', [
     'caseworker:register',
     'caseworker:logout'
@@ -14,15 +31,6 @@ def test_render1_views(client, param):
     assert resp.status_code == 302
 
 
-@pytest.mark.parametrize('param', [
-    'caseworker:login',
-])
-def test_render2_views(client, param):
-    temp_url = urls.reverse(param)
-    resp = client.get(temp_url)
-    assert resp.status_code == 200
-
-
 @pytest.mark.django_db
 def test_user_register(client, user_data1):
     user_model = get_user_model()
@@ -30,7 +38,6 @@ def test_user_register(client, user_data1):
     create_user_url = urls.reverse('caseworker:register')
     resp = client.post(create_user_url, user_data1)
     print("client.post:  ", resp)
-    # assert user_model.objects.count() == 1
     assert resp.status_code == 302
 
 
@@ -49,6 +56,26 @@ def test_user_logout(client, authenticated_user):
     logout_url = urls.reverse('caseworker:logout')
     resp = client.get(logout_url)
     assert resp.status_code == 200
+
+
+@pytest.mark.django_db
+def test_user_detail(client, new_user1):
+    user_model = get_user_model()
+    assert user_model.objects.count() == 1
+    login_url = urls.reverse('case:case-detail', kwargs={'pk': new_user1.id})
+    resp = client.get(login_url)
+    assert resp.status_code == 302
+    # assert resp.url == urls.reverse('case:case-detail', kwargs={'pk': new_user1.id})
+
+
+@pytest.mark.django_db
+def test_user_delete(client, test_user_login_fixture):
+    user_model = get_user_model()
+    assert user_model.objects.count() == 1
+    login_url = urls.reverse('case:case-delete', kwargs={'pk': test_user_login_fixture.id})
+    resp = client.get(login_url)
+    assert resp.status_code == 302
+    # assert user_model.objects.filter(pk=new_user1.id).exists() == False
 
 
 @pytest.mark.django_db
