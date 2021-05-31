@@ -1,6 +1,4 @@
-from case.models import Case, Status, CaseInfo, Company
-from django.http import HttpResponse
-from django import forms
+from case.models import Case, Status, CaseInfo  # , Company
 from django.shortcuts import render
 from django.views.generic import (
     ListView,
@@ -43,7 +41,6 @@ class CaseDeleteView(DeleteView):
 
 def CaseCreatNew(request, **kwargs):
     context = {
-        "case_info": CaseInfo.objects.get(id=3)
+        "case_info": CaseInfo.objects.get(id=1)
     }
     return render(request, 'case/case_new_form.html', context)
-
