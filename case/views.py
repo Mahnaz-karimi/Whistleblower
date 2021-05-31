@@ -1,5 +1,7 @@
-from case.models import Case, Status  # CaseInfo  # , Company
-
+from case.models import Case, Status, CaseInfo, Company
+from django.http import HttpResponse
+from django import forms
+from django.shortcuts import render
 from django.views.generic import (
     ListView,
     DetailView,
@@ -26,11 +28,11 @@ class CaseDetailView(DetailView):
         return context
 
 
-class CaseCreateView(CreateView):
-
+class CaseCreateView(CreateView, ListView):
     template_name = 'case/case_form.html'
     model = Case
-    fields = ['title', 'description', 'case_info']
+    fields = ['title', 'description']
+    context_object_name = 'Cases'
 
 
 class CaseDeleteView(DeleteView):
@@ -39,7 +41,9 @@ class CaseDeleteView(DeleteView):
     success_url = '/case'
 
 
-class ReportCreateView(CreateView):
-    template_name = 'case/case_form.html'
-    model = Case
-    fields = ['title', 'description', 'case_info']
+def CaseCreatNew(request, **kwargs):
+    context = {
+        "case_info": CaseInfo.objects.get(id=3)
+    }
+    return render(request, 'case/case_new_form.html', context)
+

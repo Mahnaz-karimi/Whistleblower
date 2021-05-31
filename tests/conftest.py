@@ -63,5 +63,10 @@ def new_user1(db, new_user_factory):
 
 
 @pytest.fixture
+def new_user1(db, new_user_factory):
+    return new_user_factory("Test_user", "password", "MyName")
+
+
+@pytest.fixture
 def new_user2(db, new_user_factory):
     return new_user_factory("Test_user", "password", "MyName", is_staff="True")

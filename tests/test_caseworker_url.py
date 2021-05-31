@@ -69,11 +69,11 @@ def test_user_detail(client, new_user1):
 
 
 @pytest.mark.django_db
-def test_user_delete(client, test_user_login_fixture):
+def test_case_delete(client, test_user_login_fixture):
     user_model = get_user_model()
     assert user_model.objects.count() == 1
     login_url = urls.reverse('case:case-delete', kwargs={'pk': test_user_login_fixture.id})
-    resp = client.get(login_url)
+    resp = client.post(login_url)
     assert resp.status_code == 302
     # assert user_model.objects.filter(pk=new_user1.id).exists() == False
 
