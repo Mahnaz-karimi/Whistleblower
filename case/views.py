@@ -1,9 +1,6 @@
 from case.models import Case, Status, CaseInfo
-from caseworker.models import Company
 from django.shortcuts import render
-from django import forms
-from extra_views import ModelFormSetView
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
+from extra_views import CreateWithInlinesView, InlineFormSetFactory
 
 from django.views.generic import (
     ListView,
@@ -11,7 +8,6 @@ from django.views.generic import (
     CreateView,
     DeleteView,
 )
-
 
 
 class CaseInline(InlineFormSetFactory):
@@ -27,14 +23,6 @@ class CaseCreateView2(CreateWithInlinesView):
     template_name = 'case/formset.html'
 
     # context_object_name = 'Case'
-
-
-
-
-
-
-
-
 
 
 class CaseListView(ListView):
