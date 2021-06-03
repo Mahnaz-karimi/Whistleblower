@@ -1,6 +1,6 @@
-from case.models import Case, Status, CaseInfo, Company
-from django.shortcuts import render
-from extra_views import CreateWithInlinesView, InlineFormSetFactory
+from case.models import Case, Status  # , CaseInfo, Company
+# from django.shortcuts import render
+# from extra_views import CreateWithInlinesView, InlineFormSetFactory
 
 from django.views.generic import (
     ListView,
@@ -39,4 +39,3 @@ class CaseDeleteView(DeleteView):
     template_name = 'case/case_confirm_delete.html'
     model = Case
     success_url = '/case'
-
