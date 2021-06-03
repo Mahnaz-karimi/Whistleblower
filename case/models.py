@@ -40,7 +40,7 @@ class CaseInfo(models.Model):
                                default="Sagen er nyoprettet")
 
     def __str__(self):  # return the name we will object calls
-        return str(self.guid)
+        return str(self.company)
 
 
 class Case(models.Model):

@@ -1,4 +1,4 @@
-from case.models import Case, Status, CaseInfo
+from case.models import Case, Status, CaseInfo, Company
 from django.shortcuts import render
 from extra_views import CreateWithInlinesView, InlineFormSetFactory
 
@@ -8,21 +8,6 @@ from django.views.generic import (
     CreateView,
     DeleteView,
 )
-
-
-class CaseInline(InlineFormSetFactory):
-    model = Case
-    fields = ['title', 'description', 'case_info']
-
-
-class CaseCreateView2(CreateWithInlinesView):
-    model = CaseInfo
-    fields = ['company', 'status']
-
-    inlines = [CaseInline]
-    template_name = 'case/formset.html'
-
-    # context_object_name = 'Case'
 
 
 class CaseListView(ListView):
@@ -55,9 +40,3 @@ class CaseDeleteView(DeleteView):
     model = Case
     success_url = '/case'
 
-
-def CaseCreatNew(request, **kwargs):
-    context = {
-        "case_info": CaseInfo.objects.get(id=1)
-    }
-    return render(request, 'case/case_new_form.html', context)
