@@ -66,7 +66,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'storages',
     'django_extensions',
-    'django-extra-views',
 ]
 
 MIDDLEWARE = [
