@@ -64,4 +64,4 @@ jobs:
           source venv/bin/activate
           python manage.py collectstatic
           python manage.py migrate
-          touch /home/admin/Whistle_blower/wsgi.py
+          touch /home/admin/Whistle_blower/config/wsgi.py
