@@ -8,7 +8,7 @@
                     <h10><a href="{% url 'case:caseinfo-cases-view' caseinfo.id %}">{{caseinfo.guid}}</a></h10>
                     <p><small class="text-muted">{{ caseinfo.caseworker }}</small></p>
                 </div>
-                <h10><a class="article-title" href="#"> Case GUID : {{caseinfo.company}}</a></h10>
+                <h10><a class="article-title" href="#"> Company : {{caseinfo.company}}</a></h10>
                 <p> Case status : {{caseinfo.status}}</p>
                  <div>
                   <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'case:caseinfo-delete' caseinfo.id %}">Slet</a>
