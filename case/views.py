@@ -33,7 +33,7 @@ class CaseInfoCasesListView(ListView):
         context = super(CaseInfoCasesListView, self).get_context_data(**kwargs)
         case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
         print("Case info ", case_info)
-        context['Case'] =  Case.objects.filter(case_info=case_info.id)
+        context['Case'] = Case.objects.filter(case_info=case_info.id)
         print(Case.objects.filter(case_info=case_info.id))
         return context
 
