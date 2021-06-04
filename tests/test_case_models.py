@@ -64,6 +64,10 @@ class CaseModelTest(TestCase):
     def test_case_created_date(self):
         self.assertEqual(str(self.case1.created), str(date.today()))
 
+    # Test that case-info is the same
+    def test_case_case_info(self):
+        self.assertEqual(self.case1.case_info, self.case_info1)
+
     # Test that default value is NEW
     def test_status_created(self):
         self.assertEqual(self.status1.status, Status.NEW)

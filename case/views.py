@@ -1,4 +1,6 @@
-from case.models import Case, Status  # , CaseInfo, Company
+from django.shortcuts import get_object_or_404
+
+from case.models import Case, Status, CaseInfo  # , Company
 # from django.shortcuts import render
 # from extra_views import CreateWithInlinesView, InlineFormSetFactory
 
@@ -15,6 +17,34 @@ class CaseListView(ListView):
     template_name = 'case/case.html'
     context_object_name = 'Case'
     ordering = ['-created']
+
+
+class CaseInfoListView(ListView):
+    model = CaseInfo
+    template_name = 'case/caseinfo.html'
+    context_object_name = 'CaseInfo'
+
+
+class CaseInfoCasesListView(ListView):
+    model = Case
+    template_name = 'case/caseinfo_cases.html'
+
+    def get_queryset(self):
+        case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+        print("Case info ", case_info)
+        print(Case.objects.filter(case_info=case_info.id))
+        return Case.objects.filter(case_info=case_info.id)
+
+
+class CaseNewCreateView(CreateView):
+    template_name = 'case/new_form.caseworker.html'
+    model = Case
+    fields = ['title', 'description']
+
+    def form_valid(self, form):
+        case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+        form.instance.case_info = case_info
+        return super(CaseNewCreateView, self).form_valid(form)
 
 
 class CaseDetailView(DetailView):

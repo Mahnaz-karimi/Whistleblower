@@ -1,11 +1,10 @@
 {% extends "case/base.html" %}
 {% block content %}
     {% for case in Case %}
-
        <case class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                    <h1><a href="{% url 'case:case-detail' case.id %}">{{case.title}}</a></h1>
+
                     <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
                 </div>
                 <h10><a class="article-title" href="#"> Firmanavn : {{case.case_info.company}}</a></h10>

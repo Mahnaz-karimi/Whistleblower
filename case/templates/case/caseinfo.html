@@ -1,0 +1,16 @@
+{% extends "case/base.html" %}
+{% block content %}
+    {% for caseinfo in CaseInfo %}
+
+       <case class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <h10><a href="{% url 'case:caseinfo-cases-view' caseinfo.id %}">{{caseinfo.guid}}</a></h10>
+                    <p><small class="text-muted">{{ caseinfo.caseworker }}</small></p>
+                </div>
+                <h10><a class="article-title" href="#"> Case GUID : {{caseinfo.company}}</a></h10>
+                <p> Case status : {{caseinfo.status}}</p>
+            </div>
+       </case>
+    {% endfor %}
+{% endblock content %}
