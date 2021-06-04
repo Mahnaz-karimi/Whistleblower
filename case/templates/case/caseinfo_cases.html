@@ -11,6 +11,8 @@
                 <p> Sagsbehandleren navn : {{case.case_info.caseworker}}</p>
                 <p> Case status:  {{case.case_info.status}}</p>
             </div>
+
        </case>
     {% endfor %}
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
 {% endblock content %}

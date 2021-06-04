@@ -29,11 +29,19 @@ class CaseInfoCasesListView(ListView):
     model = Case
     template_name = 'case/caseinfo_cases.html'
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super(CaseInfoCasesListView, self).get_context_data(**kwargs)
         case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
         print("Case info ", case_info)
+        context['Case'] =  Case.objects.filter(case_info=case_info.id)
         print(Case.objects.filter(case_info=case_info.id))
-        return Case.objects.filter(case_info=case_info.id)
+        return context
+
+
+class CaseInfoDeleteView(DeleteView):
+    template_name = 'case/case_confirm_delete.html'
+    model = CaseInfo
+    success_url = '/case'
 
 
 class CaseNewCreateView(CreateView):

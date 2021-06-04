@@ -27,7 +27,7 @@ jobs:
       DB_PASSWORD: postgres
       DB_PORT: 5432
       DB_USER: postgres
-      DEBUG_VALUE: True
+      DEBUG_VALUE: False
       ALLOWED_HOSTS: '*'
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
