@@ -8,7 +8,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('case/',  include('case.urls')),
     path('caseworker/', include('caseworker.urls')),
-
     path('', RedirectView.as_view(url='/caseworker/')),
     path('accounts/login/', RedirectView.as_view(url='/caseworker/')),
     path('admin/login/', RedirectView.as_view(url='/caseworker/')),

@@ -39,24 +39,42 @@ class TestCaseView(TestCase):
         )
         self.case1.save()
 
-    def test_Case_ListView_Get(self):
+    def test_CaseInfo_ListView_Get(self):
         response = self.client.get('/case/')
         self.assertEqual(response.status_code, 302)
         # self.assertTemplateUsed(response, 'case/case.html')
 
-    def test_Case_CreateView_Post(self):
-        self.detail_url = reverse('case:case-create')
+    def test_CaseInfo_Cases_ListView(self):
+        case = Case.objects.latest('pk')
+        self.detail_url = reverse('case:case-create-new', args=[case.case_info.id])
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_Case_Info_DeleteView(self):
+        case_info = CaseInfo.objects.latest('pk')
+        self.detail_url = reverse('case:caseinfo-delete', args=[case_info.id])
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_Case_new_CreateView_Post(self):
+        case = Case.objects.latest('pk')
+        self.detail_url = reverse('case:caseinfo-cases-view', args=[case.case_info.id])
         response = self.client.post(self.detail_url, {
             'title': 'Unit test case title 1',
             'description': 'Unit test case description 1',
-            'case_info': self.case_info1
         })
         self.assertEqual(response.status_code, 302)
         # self.assertTemplateUsed(response, 'case/case_form.html')
 
     def test_Case_DetailView_Post(self):
-        case_id = Case.objects.latest('pk')
-        self.detail_url = reverse('case:case-detail', args=[case_id.id])
+        case = Case.objects.latest('pk')
+        self.detail_url = reverse('case:case-detail', args=[case.id])
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(self.case1.case_info.company.name, 'microsof')
+
+    def test_Case_DeleteView(self):
+        case = Case.objects.latest('pk')
+        self.detail_url = reverse('case:case-delete', args=[case.id])
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 302)

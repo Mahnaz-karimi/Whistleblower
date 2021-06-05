@@ -8,8 +8,7 @@ url_data = [
     ('caseworker:register', 302),
     ('caseworker:logout', 302),
     ('caseworker:login', 200),
-    ('case:case-view', 302),
-    ('case:case-create', 302),
+    ('case:caseinfo-view', 302),
 
 ]
 
@@ -48,7 +47,7 @@ def test_user_login(client, test_user_login_fixture, user_data2):
     login_url = urls.reverse('caseworker:login')
     resp = client.post(login_url, data=user_data2)
     assert resp.status_code == 302
-    assert resp.url == urls.reverse('case:case-view')
+    assert resp.url == urls.reverse('case:caseinfo-view')
 
 
 @pytest.mark.django_db

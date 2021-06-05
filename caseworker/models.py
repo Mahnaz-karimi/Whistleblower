@@ -32,4 +32,4 @@ class Company(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, related_name="address")
 
     def __str__(self):
-        return self.name
+        return self.name + ' ' + str(self.guid)
