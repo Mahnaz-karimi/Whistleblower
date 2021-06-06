@@ -8,8 +8,6 @@ url_data = [
     ('caseworker:register', 302),
     ('caseworker:logout', 302),
     ('caseworker:login', 200),
-    ('case:caseinfo-view', 302),
-
 ]
 
 

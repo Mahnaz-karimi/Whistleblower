@@ -95,7 +95,7 @@ class TestCaseView(TestCase):
 
     def test_CaseInfoUpdateView(self):
         case_info = self.case_info1
-        self.detail_url = reverse('case:new-report', args=[case_info.id])
+        self.detail_url = reverse('case:case-update', args=[case_info.id])
         response = self.client.post(self.detail_url, {
             'status': self.status1,
             'company': self.company1,
