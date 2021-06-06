@@ -6,13 +6,14 @@ from django.urls import reverse
 # from django.http import HttpResponse
 # from django.shortcuts import render
 # from extra_views import CreateWithInlinesView, InlineFormSetFactory
-
+# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     FormView,
     ListView,
     DetailView,
     CreateView,
     DeleteView,
+    UpdateView,
 )
 
 
@@ -108,3 +109,9 @@ class ReportCreateView(CreateView):
         case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
         form.instance.case_info = case_info
         return super(ReportCreateView, self).form_valid(form)
+
+
+class CaseInfoUpdateView(UpdateView):  # add mixin hjælper os at postens skaberen får lov til update post
+    model = CaseInfo
+    fields = ['caseworker', 'status']
+    success_url = '/case'

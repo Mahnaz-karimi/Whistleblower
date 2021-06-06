@@ -1,6 +1,6 @@
 from django.urls import path
 from case.views import CaseDetailView, CaseDeleteView, CaseNewCreateView, \
-    CaseInfoListView, CaseInfoCasesListView, CaseInfoDeleteView, ReportCreateView, ReportLoginView
+    CaseInfoListView, CaseInfoCasesListView, CaseInfoDeleteView, ReportCreateView, ReportLoginView, CaseInfoUpdateView
 from django.contrib.auth.decorators import login_required
 
 
@@ -13,6 +13,7 @@ urlpatterns = [
     path('<int:pk>/delete/', login_required(CaseDeleteView.as_view()), name='case-delete'),
     path('<int:pk>/delete/caseinfo/', login_required(CaseInfoDeleteView.as_view()), name='caseinfo-delete'),
     path('<int:id>/new/report/', ReportCreateView.as_view(), name='new-report'),
-    path('login/', ReportLoginView.as_view(), name='report-login')
+    path('login/', ReportLoginView.as_view(), name='report-login'),
+    path('post/<int:pk>/update/', CaseInfoUpdateView.as_view(), name='case-update'),
 
 ]

@@ -8,9 +8,10 @@
                     <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
                 </div>
                 <h10><a class="article-title" href="{% url 'case:case-detail' case.id %}"> Firmanavn : {{case.case_info.company}}</a></h10>
-                <p> Sagens title:  {{case.title}}</p>
-                <p> Sagsbehandleren navn : {{case.case_info.caseworker}}</p>
-                <p> Sagen status:  {{case.case_info.status}}</p>
+                <p> Sagens titel:  {{case.title}}</p>
+                <p> Sagens beskrivelse:  {{case.description}}</p>
+                <p> Sagsbehandlerens navn : {{case.case_info.caseworker}}</p>
+                <p> Sagens status:  {{case.case_info.status}}</p>
             </div>
 
        </case>

@@ -66,3 +66,20 @@ jobs:
           python manage.py collectstatic
           python manage.py migrate
           touch /home/admin/Whistle_blower/config/wsgi.py
+  check:
+    needs: [ deploy ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check deploy
+        run: |
+          - uses: actions/checkout@v2
+          - name: Set up Python 3.9
+            uses: actions/setup-python@v2
+            with:
+              python-version: 3.9
+          - name: Install dependencies
+          - uses: browser-actions/setup-geckodriver@latest
+            run: |
+              python -m pip install --upgrade pip
+              if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+              pytest installcheck/install_check_test.py
