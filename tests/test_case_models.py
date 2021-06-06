@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from datetime import date
 import uuid
 from case.models import Case, Status, CaseInfo
@@ -8,8 +8,12 @@ from caseworker.models import Country, PostalCode, Address, Company
 class CaseModelTest(TestCase):
 
     def setUp(self):
+        self.client = Client()
 
-        self.country_name1 = Country.objects.create(name='Denmark')
+        self.country_name1 = Country.objects.create(
+            name='Denmark'
+        )
+
         self.postal_code1 = PostalCode.objects.create(
             post_code='2500', city_name='Valby', country=self.country_name1
         )
@@ -35,6 +39,8 @@ class CaseModelTest(TestCase):
             description='Unit test case description 1',
             case_info=self.case_info1
         )
+        self.case_info1.save()
+        self.case1.save()
 
     # Test that Status has a status of type str
     def test_status_has_status(self):

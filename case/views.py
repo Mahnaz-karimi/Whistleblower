@@ -3,7 +3,7 @@ from case.models import Case, Status, CaseInfo, Company
 from django.shortcuts import redirect, render
 from case.forms import AnonymousForm
 from django.urls import reverse
-from django.http import HttpResponse
+# from django.http import HttpResponse
 # from django.shortcuts import render
 # from extra_views import CreateWithInlinesView, InlineFormSetFactory
 
@@ -81,34 +81,26 @@ class ReportLoginView(FormView):
             return render(request, self.template_name, context)
         try:
             company = Company.objects.get(guid=guid)  # Kaster en undtagelse hvis company.guid er ukendt
+            status = Status.objects.create()
+            case_info = CaseInfo.objects.create(status=status, company=company)
+            case_info.save()
             request.session['cmp_guid'] = 'valid'
-            context = {'company': company, }
+            context = {'case_info': case_info, }
             case_create_url = reverse('case:new-report')
             return redirect(case_create_url, context)
         except Company.DoesNotExist:
             return redirect('case:report-login')
 
-    def dispatch(self, request, *args, **kwargs):
-        if 'cmp_guid' in self.request.session:
-            if self.request.session['cmp_guid'] == 'valid':
-                return redirect('new_report')
-        else:
-            return super(ReportLoginView, self).dispatch(request, *args, **kwargs)
-
 
 class ReportCreateView(CreateView):
-
-    template_name = 'case/case_form.html'
+    template_name = 'case/report_form.html'
     model = Case
-    context_object_name = 'Cases'
-    fields = ['title', 'description', 'case_info']
-    form_class = CreateView
+    fields = ['title', 'description']
 
     def get(self, request, *args, **kwargs):
-        guid_in_request = ('cmp_guid' in self.request.session)
-        if guid_in_request:
+        if 'cmp_guid' in self.request.session:
             if self.request.session['cmp_guid'] == 'valid':
                 del request.session['cmp_guid']
-                return HttpResponse('<H1>Guid fundet</H1>')
+                return render(request, 'case/report_form.html')
         else:
             return redirect(reverse('case:report-login'))

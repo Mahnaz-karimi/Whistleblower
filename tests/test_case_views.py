@@ -2,12 +2,14 @@ from django.test import TestCase, Client
 from case.models import Case, CaseInfo, Status
 from caseworker.models import Company, Country, PostalCode, Address
 from django.urls import reverse
+import uuid
 
 
 class TestCaseView(TestCase):
 
     def setUp(self):
         self.client = Client()
+        self.guid = uuid.uuid4()
 
         self.country_name1 = Country.objects.create(
             name='Denmark'
@@ -64,7 +66,7 @@ class TestCaseView(TestCase):
             'description': 'Unit test case description 1',
         })
         self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, 'case/case_form.html')
+        # self.assertTemplateUsed(response, 'case/case_new_caseworker.html')
 
     def test_Case_DetailView_Post(self):
         case = Case.objects.latest('pk')
@@ -76,5 +78,16 @@ class TestCaseView(TestCase):
     def test_Case_DeleteView(self):
         case = Case.objects.latest('pk')
         self.detail_url = reverse('case:case-delete', args=[case.id])
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_Report_LoginView(self):
+        self.detail_url = reverse('case:report-login')
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'case/report_login.html')
+
+    def test_ReportCreateView(self):
+        self.detail_url = reverse('case:new-report')
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 302)
