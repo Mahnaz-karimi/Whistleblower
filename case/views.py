@@ -84,16 +84,15 @@ class ReportLoginView(FormView):
             status = Status.objects.create()
             case_info = CaseInfo.objects.create(status=status, company=company)
             case_info.save()
+            context = {'case_info': case_info}
             request.session['cmp_guid'] = 'valid'
-            context = {'case_info': case_info, }
-            case_create_url = reverse('case:new-report')
+            case_create_url = reverse('case:new-report', args=[case_info.id])
             return redirect(case_create_url, context)
         except Company.DoesNotExist:
             return redirect('case:report-login')
 
 
 class ReportCreateView(CreateView):
-    template_name = 'case/report_form.html'
     model = Case
     fields = ['title', 'description']
 
@@ -104,3 +103,8 @@ class ReportCreateView(CreateView):
                 return render(request, 'case/report_form.html')
         else:
             return redirect(reverse('case:report-login'))
+
+    def form_valid(self, form):
+        case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+        form.instance.case_info = case_info
+        return super(ReportCreateView, self).form_valid(form)

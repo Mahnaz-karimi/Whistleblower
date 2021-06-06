@@ -12,7 +12,7 @@ urlpatterns = [
     path('<int:id>/new/', login_required(CaseNewCreateView.as_view()), name='case-create-new'),
     path('<int:pk>/delete/', login_required(CaseDeleteView.as_view()), name='case-delete'),
     path('<int:pk>/delete/caseinfo/', login_required(CaseInfoDeleteView.as_view()), name='caseinfo-delete'),
-    path('new/report/', ReportCreateView.as_view(), name='new-report'),
+    path('<int:id>/new/report/', ReportCreateView.as_view(), name='new-report'),
     path('login/', ReportLoginView.as_view(), name='report-login')
 
 ]

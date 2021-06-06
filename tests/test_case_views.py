@@ -88,6 +88,7 @@ class TestCaseView(TestCase):
         self.assertTemplateUsed(response, 'case/report_login.html')
 
     def test_ReportCreateView(self):
-        self.detail_url = reverse('case:new-report')
+        case_info = self.case_info1
+        self.detail_url = reverse('case:new-report', args=[case_info.id])
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 302)
