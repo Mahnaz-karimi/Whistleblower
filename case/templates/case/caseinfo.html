@@ -2,7 +2,7 @@
 {% block content %}
     {% for caseinfo in CaseInfo %}
 
-       <case class="media content-section">
+       <caseinfo class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
                     <h10><a href="{% url 'case:caseinfo-cases-view' caseinfo.id %}">{{caseinfo.guid}}</a></h10>
@@ -17,6 +17,6 @@
                   <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{% url 'case:case-create-new' caseinfo.id %}">Tilføj kommentar</a>
               </div>
             </div>
-       </case>
+       </caseinfo>
     {% endfor %}
 {% endblock content %}

@@ -115,3 +115,36 @@ class CaseInfoUpdateView(UpdateView):  # add mixin hjælper os at postens skaber
     model = CaseInfo
     fields = ['caseworker', 'status']
     success_url = '/case'
+
+
+class RevisitLoginView(FormView):
+    template_name = 'case/revisit_login.html'
+    form_class = AnonymousForm
+
+    def post(self, request, *args, **kwargs):
+        form = AnonymousForm(request.POST)
+        guid = form['guid'].data
+        if not form.is_valid():
+            context = {'form': form}
+            return render(request, self.template_name, context)
+        try:
+            case_info = CaseInfo.objects.get(guid=guid)
+            cases = Case.objects.get(case_info=case_info.id)
+            print("cases : ", [cases])
+            context = {'case_info': case_info}
+            request.session['case_guid'] = 'valid'
+            case_create_url = reverse('case:revisit-report', args=[case_info.id])
+            return redirect(case_create_url, context)
+        except Company.DoesNotExist:
+            return redirect('case:report-login')
+
+
+class RevisitCreateView(ListView):
+    model = CaseInfo
+    template_name = 'case/revisit_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+        context['case_info'] = self.CaseInfo
+        return context
