@@ -129,8 +129,6 @@ class RevisitLoginView(FormView):
             return render(request, self.template_name, context)
         try:
             case_info = CaseInfo.objects.get(guid=guid)
-            cases = Case.objects.get(case_info=case_info.id)
-            print("cases : ", [cases])
             context = {'case_info': case_info}
             request.session['case_guid'] = 'valid'
             case_create_url = reverse('case:revisit-report', args=[case_info.id])
@@ -147,4 +145,7 @@ class RevisitCreateView(ListView):
         context = super().get_context_data(**kwargs)
         self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
         context['case_info'] = self.CaseInfo
+        context['cases'] = Case.objects.filter(case_info=self.CaseInfo.id).order_by('-created')
+        deletable_state = Status.CASESTATUS[0][1]
+        context['deletable'] = (str(self.CaseInfo.status) == deletable_state)
         return context

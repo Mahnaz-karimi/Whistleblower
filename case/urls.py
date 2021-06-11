@@ -18,5 +18,5 @@ urlpatterns = [
     path('post/<int:pk>/update/', CaseInfoUpdateView.as_view(), name='case-update'),
     path('<int:id>/revisit/report/', RevisitCreateView.as_view(), name='revisit-report'),
     path('login/revisit/', RevisitLoginView.as_view(), name='revisit-login'),
-
+    path('<int:id>/revisit/new/', CaseNewCreateView.as_view(), name='case-revisit-new'),
 ]
