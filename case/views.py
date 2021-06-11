@@ -144,8 +144,12 @@ class RevisitCreateView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
-        context['case_info'] = self.CaseInfo
+        context['case_info'] = get_object_or_404(CaseInfo, id=self.kwargs['id'])
         context['cases'] = Case.objects.filter(case_info=self.CaseInfo.id).order_by('-created')
-        deletable_state = Status.CASESTATUS[0][1]
-        context['deletable'] = (str(self.CaseInfo.status) == deletable_state)
-        return context
+        context['deletable'] = (str(self.CaseInfo.status) == Status.CASESTATUS[0][1])
+        if 'case_guid' in self.request.session:
+            if self.request.session['case_guid'] == 'valid':
+                del self.request.session['case_guid']
+                return context
+            else:
+                return redirect(reverse('case:report-login'))
