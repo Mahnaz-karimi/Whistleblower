@@ -1,35 +1,43 @@
 {% extends "case/base.html" %}
 {% block content %}
-<div class="media-body">
-   <caseinfo class="media content-section">
-        <div class="media-body">
-            <div class="article-metadata">
-              <p> GUID-NR : {{case_info.guid}}</p>
-            </div>
-            <p> Sagssbehandler : {{case_info.caseworker}}</p>
-            <p> Firmanavn : {{case_info.company.name}}</p>
-            <p> Sagsstatus : {{case_info.status}}</p>
-        </div>
-            <div>
-                {% if deletable %}
-                  <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'case:caseinfo-delete' case_info.id %}">Slet</a>
-                {% endif %}
-                <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{% url 'case:revisit-case-new' case_info.id %}">Tilføj kommentar</a>
-            </div>
-   </caseinfo>
+    <legend class="border-bottom mb-4">Information om din anmedelse</legend>
     <div class="media-body">
-        {% for case in cases %}
-           <case class="media content-section">
-                <div class="media-body">
-                    <div class="article-metadata">
-                        <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
-                    </div>
-                    <p> Sagens titel:  {{case.title}}</p>
-                    <p> Sagens beskrivelse:  {{case.description}}</p>
+       <caseinfo class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                  <p> GUID-NR : {{case_info.guid}}</p>
                 </div>
-           </case>
-        {% endfor %}
-    </div>
+                <p> Sagssbehandler : {{case_info.caseworker}}</p>
+                <p> Firmanavn : {{case_info.company.name}}</p>
+                <p> Sagsstatus : {{case_info.status}}</p>
+            </div>
+                <div>
+                    {% if deletable %}
+                      <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'case:caseinfo-delete' case_info.id %}">Slet</a>
+                    {% endif %}
+                    <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{% url 'case:revisit-case-new' case_info.id %}">Tilføj kommentar</a>
+                </div>
+
+       </caseinfo>
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Alle beskider</legend>
+
+        <div class="media-body">
+            {% for case in cases %}
+               <case class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
+                        </div>
+                        <p> Sagens titel:  {{case.title}}</p>
+                        <p> Sagens beskrivelse:  {{case.description}}</p>
+                    </div>
+               </case>
+            {% endfor %}
+        </div>
+    </fieldset>
+
+</div>
 </div>
 
 {% endblock content %}

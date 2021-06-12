@@ -51,6 +51,7 @@ class CaseNewCreateView(CreateView):
     template_name = 'case/case_new_caseworker.html'
     model = Case
     fields = ['title', 'description']
+    success_url = '/case'
 
     def form_valid(self, form):
         case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
