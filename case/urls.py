@@ -1,7 +1,7 @@
 from django.urls import path
 from case.views import CaseDetailView, CaseDeleteView, CaseNewCreateView, \
     CaseInfoListView, CaseInfoCasesListView, CaseInfoDeleteView, ReportCreateView, \
-    ReportLoginView, CaseInfoUpdateView, RevisitCreateView, RevisitLoginView
+    ReportLoginView, CaseInfoUpdateView, RevisitCaseInfoView, RevisitLoginView, RevisitCaseNewCreateView
 from django.contrib.auth.decorators import login_required
 
 
@@ -17,6 +17,6 @@ urlpatterns = [
     path('login/', ReportLoginView.as_view(), name='report-login'),
     path('post/<int:pk>/update/', CaseInfoUpdateView.as_view(), name='case-update'),
     path('login/revisit/', RevisitLoginView.as_view(), name='revisit-login'),
-    path('<int:id>/revisit/report/', RevisitCreateView.as_view(), name='revisit-report'),
-    path('<int:id>/revisit/new/', CaseNewCreateView.as_view(), name='revisit-case-new'),
+    path('<int:id>/revisit/report/', RevisitCaseInfoView.as_view(), name='revisit-report'),
+    path('<int:id>/revisit/new/', RevisitCaseNewCreateView.as_view(), name='revisit-case-new'),
 ]

@@ -30,9 +30,7 @@ class CaseInfoCasesListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(CaseInfoCasesListView, self).get_context_data(**kwargs)
         case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
-        print("Case info ", case_info)
         context['Case'] = Case.objects.filter(case_info=case_info.id)
-        print(Case.objects.filter(case_info=case_info.id))
         return context
 
 
@@ -40,6 +38,13 @@ class CaseInfoDeleteView(DeleteView):
     template_name = 'case/case_confirm_delete.html'
     model = CaseInfo
     success_url = '/case'
+
+
+class CaseInfoUpdateView(UpdateView):
+    model = CaseInfo
+    fields = ['caseworker', 'status']
+    success_url = '/case'
+    template_name = 'case/caseinfo_form.html'
 
 
 class CaseNewCreateView(CreateView):
@@ -111,12 +116,6 @@ class ReportCreateView(CreateView):
         return super(ReportCreateView, self).form_valid(form)
 
 
-class CaseInfoUpdateView(UpdateView):  # add mixin hjælper os at postens skaberen får lov til update post
-    model = CaseInfo
-    fields = ['caseworker', 'status']
-    success_url = '/case'
-
-
 class RevisitLoginView(FormView):
     template_name = 'case/revisit_login.html'
     form_class = AnonymousForm
@@ -137,19 +136,42 @@ class RevisitLoginView(FormView):
             return redirect('case:report-login')
 
 
-class RevisitCreateView(ListView):
+class RevisitCaseInfoView(ListView):
     model = CaseInfo
     template_name = 'case/revisit_report.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
-        context['case_info'] = get_object_or_404(CaseInfo, id=self.kwargs['id'])
-        context['cases'] = Case.objects.filter(case_info=self.CaseInfo.id).order_by('-created')
-        context['deletable'] = (str(self.CaseInfo.status) == Status.CASESTATUS[0][1])
         if 'case_guid' in self.request.session:
             if self.request.session['case_guid'] == 'valid':
-                del self.request.session['case_guid']
-                return context
+                try:
+                    context = super().get_context_data(**kwargs)
+                    self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+                    context['case_info'] = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+                    context['cases'] = Case.objects.filter(case_info=self.CaseInfo.id).order_by('-created')
+                    context['deletable'] = (str(self.CaseInfo.status) == Status.CASESTATUS[0][1])
+                    del self.request.session['case_guid']
+                    self.request.session['info_guid'] = 'valid'
+                    return context
+                except Company.DoesNotExist:
+                    return redirect('case:report-login')
+                
             else:
                 return redirect(reverse('case:report-login'))
+
+
+class RevisitCaseNewCreateView(CreateView):
+    model = Case
+    fields = ['title', 'description']
+
+    def get(self, request, *args, **kwargs):
+        if 'info_guid' in self.request.session:
+            if self.request.session['info_guid'] == 'valid':
+                del request.session['info_guid']
+                return render(request, 'case/revisit_case_new.html')
+        else:
+            return redirect(reverse('case:report-login'))
+
+    def form_valid(self, form):
+        case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+        form.instance.case_info = case_info
+        return super(RevisitCaseNewCreateView, self).form_valid(form)
