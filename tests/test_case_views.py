@@ -105,7 +105,7 @@ class TestCaseView(TestCase):
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 302)
 
-    def test_RevisitLoginView(self):
+    def test_RevisitLoginViewWithValidData(self):
         data = {"case_info": self.case_info1}
         form = AnonymousForm(data=data)
         response = self.client.get(reverse('case:revisit-login'), args=[form])
