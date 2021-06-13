@@ -1,6 +1,7 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+import uuid
 
 
 @pytest.fixture
@@ -11,6 +12,15 @@ def user_data1():
 @pytest.fixture
 def user_data2():
     return {'username': 'user_name', 'password': 'tests123'}
+
+
+@pytest.fixture
+def case_data1():
+    return {
+        'title': 'Unit test case title 1',
+        'description': 'Unit test case description 1',
+        'case_info': uuid.uuid4()
+            }
 
 
 @pytest.fixture
