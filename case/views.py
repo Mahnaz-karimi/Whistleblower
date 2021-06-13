@@ -155,7 +155,6 @@ class RevisitCaseInfoView(ListView):
                     return context
                 except Company.DoesNotExist:
                     return redirect('case:report-login')
-                
             else:
                 return redirect(reverse('case:report-login'))
 

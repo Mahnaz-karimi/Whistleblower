@@ -3,6 +3,7 @@ from case.models import Case, CaseInfo, Status
 from caseworker.models import Company, Country, PostalCode, Address
 from django.urls import reverse
 import uuid
+from case.forms import AnonymousForm
 
 
 class TestCaseView(TestCase):
@@ -39,6 +40,7 @@ class TestCaseView(TestCase):
             description='Unit test case description 1',
             case_info=self.case_info1
         )
+        self.case_info1.save()
         self.case1.save()
 
     def test_CaseInfo_ListView_Get(self):
@@ -57,6 +59,15 @@ class TestCaseView(TestCase):
         self.detail_url = reverse('case:caseinfo-delete', args=[case_info.id])
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 302)
+
+    def test_CaseInfoUpdateView(self):
+        case_info = self.case_info1
+        self.detail_url = reverse('case:case-update', args=[case_info.id])
+        response = self.client.post(self.detail_url, {
+            'status': self.status1,
+            'company': self.company1,
+        })
+        self.assertEqual(response.status_code, 200)
 
     def test_Case_new_CreateView_Post(self):
         case = Case.objects.latest('pk')
@@ -93,11 +104,21 @@ class TestCaseView(TestCase):
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 302)
 
-    def test_CaseInfoUpdateView(self):
-        case_info = self.case_info1
-        self.detail_url = reverse('case:case-update', args=[case_info.id])
-        response = self.client.post(self.detail_url, {
-            'status': self.status1,
-            'company': self.company1,
-        })
+    def test_RevisitLoginView(self):
+        data = {"case_info": self.case_info1}
+        form = AnonymousForm(data=data)
+        response = self.client.get(reverse('case:revisit-login'), args=[form])
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'case/revisit_login.html')
+
+    def test_RevisitCaseInfoView(self):
+        data = {"case_info": self.case_info1}
+        form = AnonymousForm(data=data)
+        response = self.client.get(reverse('case:revisit-login'), args=[form])
+        self.assertEqual(response.status_code, 200)
+
+    def test_RevisitCaseNewCreateView(self):
+        case_info = self.case_info1
+        self.detail_url = reverse('case:revisit-case-new', args=[case_info.id])
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 302)
