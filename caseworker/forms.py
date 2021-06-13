@@ -8,7 +8,7 @@ from caseworker.models import Address, Company
 class CaseworkerAdmin(UserCreationForm):
     email = forms.EmailField()
     address = models.OneToOneField(Address, on_delete=models.DO_NOTHING, related_name="address")
-    company = models.ManyToManyField(Company)
+    company = models.OneToOneField(Company, on_delete=models.DO_NOTHING, related_name="company", null=True, blank=True)
 
     class Meta:
         model = User
