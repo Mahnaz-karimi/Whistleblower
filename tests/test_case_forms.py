@@ -26,4 +26,3 @@ class TestForms(TestCase):
         })
         assert not form.is_valid()
         assert len(form.errors) == 1
-
