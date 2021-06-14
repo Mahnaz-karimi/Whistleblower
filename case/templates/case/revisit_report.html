@@ -1,5 +1,6 @@
 {% extends "case/base.html" %}
 {% block content %}
+{% csrf_token %}
     <legend class="border-bottom mb-4">Information om din anmedelse</legend>
     <div class="media-body">
        <caseinfo class="media content-section">
