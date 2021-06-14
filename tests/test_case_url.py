@@ -5,6 +5,7 @@ import pytest
 url_data = [
     ('case:caseinfo-view', 302),
     ('case:report-login', 200),
+    ('case:revisit-login', 200),
 ]
 
 
