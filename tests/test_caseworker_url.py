@@ -2,7 +2,7 @@ from django import urls
 from django.contrib.auth import get_user_model
 import pytest
 from django.contrib.auth.models import User
-
+from bs4 import BeautifulSoup
 
 url_data = [
     ('caseworker:register', 302),
@@ -34,7 +34,21 @@ def test_user_register(client, user_data1):
     assert user_model.objects.count() == 0
     create_user_url = urls.reverse('caseworker:register')
     resp = client.post(create_user_url, user_data1)
-    print("client.post:  ", resp)
+    assert resp.status_code == 302
+
+
+@pytest.mark.django_db
+def test_register(client):
+    """Registers a user and verifies their last login date is correct"""
+    register_url = urls.reverse('caseworker:register')
+    resp = client.post(register_url, {
+        'username': 'my_username',
+        'password1': 'my_password123',
+        'password2': 'my_password123',
+        'email': 'username@yahoo.com'
+    })
+
+    # The registration view should redirect us
     assert resp.status_code == 302
 
 
@@ -99,3 +113,33 @@ def test_user2_create_db(new_user2):
 def test_user_db_not_data():
     count = User.objects.all().count()
     assert count == 0
+
+
+@pytest.mark.django_db
+def test_choose_and_create_caseworker(authenticated_user_new, client, mocker):
+    """Tests the entire flow of choosing and creating a caseworker"""
+
+    # Make the get_memes function return an API response
+    mocker.patch('caseworker_api.get_memes', autospec=True, return_value=[{
+        'id': '1234',
+        'url': 'https://memeurl.com/path'
+    }])
+
+    # Patch the returned meme url when the meme is created
+    mocker.patch('caseworker_api.create_meme', autospec=True,
+                 return_value='https://memeurl.com/created')
+
+    # The "choose meme" page should have a meme with "meme_id"
+    choose_caseworker_url = urls.reverse('caseworker:register')
+    resp = client.get(choose_caseworker_url)
+
+    soup = BeautifulSoup(resp.content, 'html.parser')
+    assert resp.status_code == 200
+    assert len(soup.select('.choose-meme-link')) == 0
+    # Create a caseworker
+    resp = client.post(User, {
+        'username': 'my_username',
+        'password1': 'tests123',
+        'password2': 'tests123',
+        'email': 'username@yahoo.com'
+    })

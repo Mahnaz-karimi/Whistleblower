@@ -9,8 +9,6 @@ if os.path.exists('/etc/config.json'):
     with open('/etc/config.json') as config_file:
         config = json.load(config_file)
         SECRET_KEY = config.get('SECRET_KEY')
-        EMAIL_HOST_USER = config.get('EMAIL_USER')
-        EMAIL_HOST_PASSWORD = config.get('EMAIL_PASS')
         AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
         AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
@@ -153,4 +151,4 @@ GRAPH_MODELS = {
 
 LOGIN_REDIRECT_URL = '/case/'
 
-REVISIT_CASE = False
+# REVISIT_CASE = False

@@ -2,6 +2,17 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 import uuid
+from django_dynamic_fixture import G
+
+
+@pytest.fixture
+def authenticated_user_new(client):
+    """Create an authenticated user for a test"""
+    user = G(User, username='my_username')
+    user.set_password('my_password123')
+    user.save()
+    client.login(username='my_username', password='my_password123')
+    return user
 
 
 @pytest.fixture

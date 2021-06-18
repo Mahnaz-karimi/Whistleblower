@@ -1,12 +1,17 @@
 from django.urls import path
-from caseworker.views import register
+from caseworker.views import register, CaseWorkerListView, CaseWorkerDetailView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 
 app_name = "caseworker"
 urlpatterns = [
     path('register/', register, name='register'),
-    path('', auth_views.LoginView.as_view(template_name='caseworker/login.html'), name='login'),
-    path('logout/', login_required(auth_views.LogoutView.as_view(template_name='caseworker/logout.html')),
-         name='logout'),
+    path('',
+         auth_views.LoginView.as_view(template_name='caseworker/login.html'), name='login'),
+    path('logout/',
+         login_required(auth_views.LogoutView.as_view(template_name='caseworker/logout.html')), name='logout'),
+    path('caseworker/',
+         CaseWorkerListView.as_view(template_name='caseworker/caseworker.html'), name='caseworker'),
+    path('<int:pk>/caseworker/detail/',
+         CaseWorkerDetailView.as_view(template_name='caseworker/caseworker_detail.html'), name='caseworker-detail'),
 ]

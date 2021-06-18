@@ -1,0 +1,11 @@
+{% extends "case/base.html" %}
+{% block content %}
+    {% for caseworker in User %}
+
+            <div class="media-body">
+                <h10><a href="{% url 'caseworker:caseworker-detail' caseworker.id %}"><p> Sagsbehandler: {{caseworker.username}}</p></a></h10>
+                <p> Email:  {{caseworker.email}}</p>
+            </div>
+
+    {% endfor %}
+{% endblock content %}
