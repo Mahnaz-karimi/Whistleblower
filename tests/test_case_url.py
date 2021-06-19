@@ -1,7 +1,6 @@
 from django import urls
 import pytest
 
-
 url_data = [
     ('case:caseinfo-view', 302),
     ('case:report-login', 200),
@@ -9,8 +8,8 @@ url_data = [
 ]
 
 
-@pytest.mark.parametrize("u, expected", url_data)
-def test_logged_views(client, u, expected, user_data1):
-    temp_url = urls.reverse(u)
+@pytest.mark.parametrize("url, expected", url_data)
+def test_case_views(client, url, expected):
+    temp_url = urls.reverse(url)
     resp = client.get(temp_url)
     assert resp.status_code == expected

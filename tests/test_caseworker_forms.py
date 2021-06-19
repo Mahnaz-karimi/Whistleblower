@@ -22,7 +22,6 @@ class TestForms(TestCase):
             'email': 'username@yahoo.com'
 
         })
-        # print("print form : ", form)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)  # Der er en enkelt fejl
 
@@ -33,7 +32,6 @@ class TestForms(TestCase):
             'password2': 'madrese122'
 
         })
-        # print("print form : ", form)
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
 
@@ -45,7 +43,6 @@ class TestForms(TestCase):
             'email': 'mahnaazi@yahoo.com'
 
         })
-        # print("print form : ", form)
         self.assertFalse(form.is_valid())
 
     def test_CaseworkerAdmin_form_not_valid_without_username(self):
@@ -55,16 +52,15 @@ class TestForms(TestCase):
             'email': 'mahnaazi@yahoo.com'
 
         })
-        # print("print form : ", form)
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 1)
+        self.assertEqual(len(form.errors), 1)  # Her mangler vi en data for formen!
 
     def test_CaseworkerAdmin_no_data(self):
         form = CaseworkerAdmin(data={})
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 4)
+        self.assertEqual(len(form.errors), 4)  # Der skulle være fire fejl fordi vi har ingen data
 
     def test_CaseworkerAdmin_no_3_data(self):
         form = CaseworkerAdmin(data={'email': 'mahnaazi@yahoo.com'})
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 3)
+        self.assertEqual(len(form.errors), 3)  # der skulle være tre fejl fordi vi har givet en data

@@ -6,12 +6,9 @@ from django.contrib.auth.decorators import login_required
 app_name = "caseworker"
 urlpatterns = [
     path('register/', register, name='register'),
-    path('',
-         auth_views.LoginView.as_view(template_name='caseworker/login.html'), name='login'),
-    path('logout/',
-         login_required(auth_views.LogoutView.as_view(template_name='caseworker/logout.html')), name='logout'),
-    path('caseworker/',
-         CaseWorkerListView.as_view(template_name='caseworker/caseworker.html'), name='caseworker'),
-    path('<int:pk>/caseworker/detail/',
-         CaseWorkerDetailView.as_view(template_name='caseworker/caseworker_detail.html'), name='caseworker-detail'),
+    path('', auth_views.LoginView.as_view(template_name='caseworker/login.html'), name='login'),
+    path('logout/', login_required(auth_views.LogoutView.as_view(template_name='caseworker/logout.html')),
+         name='logout'),
+    path('caseworker/', login_required(CaseWorkerListView.as_view()), name='caseworker'),
+    path('<int:pk>/caseworker/detail/', login_required(CaseWorkerDetailView.as_view()), name='caseworker-detail'),
 ]
