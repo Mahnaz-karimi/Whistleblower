@@ -33,7 +33,7 @@ class TestCaseworkerRegister(TestCase):
     def test_Caseworker_ListView(self):
         self.caseworker_List_url = reverse('caseworker:caseworker')
         response = self.client.get('/caseworker/caseworker')
-        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response.url, self.caseworker_List_url)
 
     def test_Caseworker_DetailView(self):
         user = self.create_app_user()
