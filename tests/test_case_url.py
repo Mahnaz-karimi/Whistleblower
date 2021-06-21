@@ -1,7 +1,7 @@
 from django import urls
 import pytest
 from django.contrib.auth import get_user_model
-from case.models import CaseInfo
+from case.models import CaseInfo, Case
 
 url_data = [
     ('case:caseinfo-view', 302),
@@ -29,7 +29,8 @@ def test_user_login(client, user_data_for_login, create_user_for_login):
 
 @pytest.mark.django_db
 def test_Login_CaseInfo_Cases_ListView(client, user_data_for_login, create_user_for_login, case_info_data):
-    test_user_login(client, user_data_for_login, create_user_for_login)
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
     case_info = CaseInfo.objects.latest('pk')
     user_url = urls.reverse('case:caseinfo-cases-view', kwargs={'id': case_info.id})  # Se sagerne under en sagsinfo
     resp = client.get(user_url)
@@ -39,22 +40,60 @@ def test_Login_CaseInfo_Cases_ListView(client, user_data_for_login, create_user_
 
 @pytest.mark.django_db
 def test_Login_CaseInfo_Delete(client, user_data_for_login, create_user_for_login, case_info_data):
-    test_user_login(client, user_data_for_login, create_user_for_login)
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
 
     case_info = CaseInfo.objects.latest('pk')
     user_url = urls.reverse('case:caseinfo-delete', kwargs={'pk': case_info.id})  # Se sagerne under en sagsinfo
-    resp = client.get(user_url)
-    assert resp.status_code == 200   # Fordi vi er logget ind
+    resp = client.post(user_url)
+    assert resp.status_code == 302   # bliver
+    assert resp.url == urls.reverse('case:caseinfo-view')  # Tjekkes at at de home view som viser alle caseinfo
 
 
 @pytest.mark.django_db
-def test_Login_CaseInfo_Update(client, user_data_for_login, create_user_for_login, case_info_data):
-    test_user_login(client, user_data_for_login, create_user_for_login)
+def test_Login_CaseInfo_Update(client, user_data_for_login, create_user_for_login, case_info_data, status_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
 
     case_info = CaseInfo.objects.latest('pk')
-    user_url = urls.reverse('case:caseinfo-update', kwargs={'pk': case_info.id})  # Se sagerne under en sagsinfo
+    user_url = urls.reverse('case:caseinfo-update', kwargs={'pk': case_info.id})  # Vælges case-info for at update
     resp = client.post(user_url, {
-            'status': case_info_data.status,
-            'company': case_info_data.company,
+            'caseworker': create_user_for_login.id,
+            'status': status_data.id,
         })
-    assert resp.status_code == 200
+    assert resp.status_code == 302  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert resp.url == urls.reverse('case:caseinfo-view')  # Home view
+
+
+@pytest.mark.django_db
+def test_Case_New_CreateView_Post(client, user_data_for_login, create_user_for_login, case_info_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:case-create-new', kwargs={'id': case_info.id})  # Vælges case-info for at update
+    resp = client.post(user_url, {
+            'title': 'Unit test case title 1',
+            'description': 'Unit test case description 1',
+        })
+    assert resp.status_code == 302  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert resp.url == urls.reverse('case:caseinfo-view')  # Home view
+
+
+@pytest.mark.django_db
+def test_Case_DetailView_Get(client, user_data_for_login, create_user_for_login, case_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
+    case = Case.objects.latest('pk')
+    user_url = urls.reverse('case:case-detail', kwargs={'pk': case.pk})  # Vælges case-info for at update
+    resp = client.get(user_url)
+    assert resp.status_code == 200  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert "Title 1" in str(resp.content)
+
+
+@pytest.mark.django_db
+def test_Case_DeleteView_Post(client, user_data_for_login, create_user_for_login, case_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
+    case = Case.objects.latest('pk')
+    user_url = urls.reverse('case:case-delete', kwargs={'pk': case.pk})  # Vælges case-info for at update
+    resp = client.post(user_url)
+    assert resp.status_code == 302  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert resp.url == urls.reverse('case:caseinfo-view')

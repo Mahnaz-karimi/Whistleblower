@@ -37,13 +37,13 @@ class CaseInfoCasesListView(ListView):
 class CaseInfoDeleteView(DeleteView):
     template_name = 'case/case_confirm_delete.html'
     model = CaseInfo
-    success_url = '/case'
+    success_url = '/case/'
 
 
 class CaseInfoUpdateView(UpdateView):
     model = CaseInfo
     fields = ['caseworker', 'status']
-    success_url = '/case'
+    success_url = '/case/'
     template_name = 'case/caseinfo_form.html'
 
 
@@ -51,7 +51,7 @@ class CaseNewCreateView(CreateView):
     template_name = 'case/case_new_caseworker.html'
     model = Case
     fields = ['title', 'description']
-    success_url = '/case'
+    success_url = '/case/'
 
     def form_valid(self, form):
         case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
@@ -73,7 +73,7 @@ class CaseDetailView(DetailView):
 class CaseDeleteView(DeleteView):
     template_name = 'case/case_confirm_delete.html'
     model = Case
-    success_url = '/case'
+    success_url = '/case/'
 
 
 class ReportLoginView(FormView):
