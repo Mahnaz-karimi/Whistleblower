@@ -157,4 +157,4 @@ if os.path.exists('/etc/features.json'):
     with open('/etc/features.json') as feature_file:
         FEATURES = json.load(feature_file)
 elif 'FEATURES' in os.environ:
-    FEATURES = os.environ.get('FEATURES')
+    FEATURES = dict(os.environ.get('FEATURES'))
