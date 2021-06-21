@@ -55,7 +55,6 @@ class TestCaseView(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/accounts/login/?next=" + self.detail_url)  # fordi vi ikke har logget ind
 
-
     def test_Case_DetailView_Post(self):
         case = Case.objects.latest('pk')
         self.detail_url = reverse('case:case-detail', args=[case.id])
