@@ -107,14 +107,6 @@ def test_ReportCreateView_Post(client,  case_info_data):
 
 
 @pytest.mark.django_db
-def test_RevisitLoginView(client, case_info_data):
-    user_url = urls.reverse('case:revisit-login')
-    resp = client.get(user_url)
-    assert resp.status_code == 200
-    assert "form" in str(resp.content)
-
-
-@pytest.mark.django_db
 def test_RevisitCaseInfoView(client, case_info_data):
     session = client.session
     session['case_guid'] = 'valid'
