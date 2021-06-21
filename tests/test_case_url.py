@@ -2,12 +2,16 @@ from django import urls
 import pytest
 from django.contrib.auth import get_user_model
 from case.models import CaseInfo, Case
+from django.conf import settings
 
 url_data = [
     ('case:caseinfo-view', 302),
     ('case:report-login', 200),
     ('case:revisit-login', 200),
 ]
+
+# Test med toggle-feature enable
+settings.FEATURES['REVISIT_CASE'] = True
 
 
 @pytest.mark.parametrize("url, expected", url_data)
@@ -89,11 +93,13 @@ def test_Case_DetailView_Get(client, user_data_for_login, create_user_for_login,
 
 
 @pytest.mark.django_db
-def test_Case_DeleteView_Post(client, user_data_for_login, create_user_for_login, case_data):
-    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+def test_ReportCreateView_Post(client, user_data_for_login, create_user_for_login, case_info_data):
+    session = client.session
+    session['cmp_guid'] = 'valid'
+    session.save()
 
-    case = Case.objects.latest('pk')
-    user_url = urls.reverse('case:case-delete', kwargs={'pk': case.pk})  # Vælges case-info for at update
-    resp = client.post(user_url)
-    assert resp.status_code == 302  # Efter at update caseinfoen,  bliver redirectet til home view
-    assert resp.url == urls.reverse('case:caseinfo-view')
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:new-report', kwargs={'id': case_info.id})  # Vælges case-info for at update
+    resp = client.get(user_url)
+    assert resp.status_code == 200  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert "Anmeldelse" in str(resp.content)

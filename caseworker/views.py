@@ -7,6 +7,8 @@ from django.views.generic import (
     ListView,
     DetailView,
 )
+from django.contrib.auth import views as auth_views
+from django.conf import settings
 
 
 @login_required
@@ -32,3 +34,11 @@ class CaseWorkerListView(ListView):
 class CaseWorkerDetailView(DetailView):
     model = User
     template_name = 'caseworker/caseworker_detail.html'
+
+
+class LoginView(auth_views.LoginView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['revisible'] = settings.FEATURES.get('REVISIT_CASE')
+        return context

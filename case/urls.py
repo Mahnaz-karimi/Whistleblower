@@ -3,6 +3,7 @@ from case.views import CaseDetailView, CaseDeleteView, CaseNewCreateView, \
     CaseInfoListView, CaseInfoCasesListView, CaseInfoDeleteView, ReportCreateView, \
     ReportLoginView, CaseInfoUpdateView, RevisitCaseInfoView, RevisitLoginView, RevisitCaseNewCreateView
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 
 app_name = "case"
@@ -20,7 +21,10 @@ urlpatterns = [
     path('<int:id>/new/report/', ReportCreateView.as_view(), name='new-report'),
     path('login/', ReportLoginView.as_view(), name='report-login'),
 
-    path('login/revisit/', RevisitLoginView.as_view(), name='revisit-login'),
-    path('<int:id>/revisit/report/', RevisitCaseInfoView.as_view(), name='revisit-report'),
-    path('<int:id>/revisit/new/', RevisitCaseNewCreateView.as_view(), name='revisit-case-new'),
 ]
+
+
+if settings.FEATURES.get('REVISIT_CASE'):
+    urlpatterns.append(path('login/revisit/', RevisitLoginView.as_view(), name='revisit-login'))
+    urlpatterns.append(path('<int:id>/revisit/report/', RevisitCaseInfoView.as_view(), name='revisit-report'))
+    urlpatterns.append(path('<int:id>/revisit/new/', RevisitCaseNewCreateView.as_view(), name='revisit-case-new'))

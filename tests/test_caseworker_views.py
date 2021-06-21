@@ -51,7 +51,6 @@ url_data_2 = [
     ('caseworker:login', 200),
     ('caseworker:logout', 200),
     ('caseworker:caseworker', 200),
-
 ]
 
 

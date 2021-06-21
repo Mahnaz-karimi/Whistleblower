@@ -33,6 +33,9 @@ jobs:
       AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
       EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
       EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      REVISIT_CASE: True
+      EDIT_CASE: True
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

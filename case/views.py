@@ -3,10 +3,7 @@ from case.models import Case, Status, CaseInfo, Company
 from django.shortcuts import redirect, render
 from case.forms import AnonymousForm
 from django.urls import reverse
-# from django.http import HttpResponse
-# from django.shortcuts import render
-# from extra_views import CreateWithInlinesView, InlineFormSetFactory
-# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.conf import settings
 from django.views.generic import (
     FormView,
     ListView,
@@ -67,6 +64,7 @@ class CaseDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         deletable_state = Status.CASESTATUS[0][1]
         context['deletable'] = (str(self.object.case_info.status) == deletable_state)
+        context['editable'] = settings.FEATURES.get('EDIT_CASE')
         return context
 
 
