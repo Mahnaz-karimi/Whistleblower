@@ -9,36 +9,13 @@ class CaseModelTest(TestCase):
 
     def setUp(self):
         self.client = Client()
-
-        self.country_name1 = Country.objects.create(
-            name='Denmark'
-        )
-
-        self.postal_code1 = PostalCode.objects.create(
-            post_code='2500', city_name='Valby', country=self.country_name1
-        )
-
-        self.address1 = Address.objects.create(
-            street='nybrovej 14',
-            post_code=self.postal_code1
-        )
-        self.company1 = Company.objects.create(
-            name='Enkelte styresle',
-            address=self.address1
-        )
-
+        self.country_name1 = Country.objects.create(name='Denmark')
+        self.postal_code1 = PostalCode.objects.create(post_code='2500', city_name='bynavn', country=self.country_name1)
+        self.address1 = Address.objects.create(street='adress 14', post_code=self.postal_code1)
+        self.company1 = Company.objects.create(name='Company1', address=self.address1)
         self.status1 = Status.objects.create()
-
-        self.case_info1 = CaseInfo.objects.create(
-            status=self.status1,
-            company=self.company1
-        )
-
-        self.case1 = Case.objects.create(
-            title='Unit test case title 1',
-            description='Unit test case description 1',
-            case_info=self.case_info1
-        )
+        self.case_info1 = CaseInfo.objects.create(status=self.status1, company=self.company1)
+        self.case1 = Case.objects.create(title='Title 1', description='Description 1', case_info=self.case_info1)
         self.case_info1.save()
         self.case1.save()
 
@@ -64,7 +41,7 @@ class CaseModelTest(TestCase):
 
     # Test that __str__ is implemented on Case
     def test_case_title(self):
-        self.assertEqual(self.case1.title, 'Unit test case title 1')
+        self.assertEqual(self.case1.title, 'Title 1')
 
     # Test that created is set to today on Case
     def test_case_created_date(self):
@@ -85,4 +62,4 @@ class CaseModelTest(TestCase):
         self.assertTrue(isinstance(self.case1, Case))
 
     def test_case1_title(self):
-        self.assertEqual(str(self.case1), "Unit test case title 1")
+        self.assertEqual(str(self.case1), "Title 1")

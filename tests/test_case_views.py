@@ -1,9 +1,7 @@
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase, Client
 from case.models import Case, CaseInfo, Status
-from case.views import CaseInfoCasesListView
 from caseworker.models import Company, Country, PostalCode, Address
 from django.urls import reverse
-from django.contrib.auth.models import User, AnonymousUser
 import uuid
 from case.forms import AnonymousForm
 
@@ -11,9 +9,6 @@ from case.forms import AnonymousForm
 class TestCaseView(TestCase):
 
     def setUp(self):
-        self.factory = RequestFactory()
-        self.user = User.objects.create_user(
-            username='jacob', email='jacob@…', password='top_secret')
 
         self.client = Client()
         self.guid = uuid.uuid4()
@@ -27,14 +22,8 @@ class TestCaseView(TestCase):
         self.status1 = Status.objects.create()
         self.case_info1 = CaseInfo.objects.create(status=self.status1, company=self.company1)
         self.case_info1.save()
-        self.case1 = Case.objects.create(title='Unit test case title 1', description='Unit test case description 1',
-                                         case_info=self.case_info1)
+        self.case1 = Case.objects.create(title='Title 1', description='Description 1', case_info=self.case_info1)
         self.case1.save()
-
-    def test_CaseInfo_ListView_Get(self):
-        response = self.client.get('/case/')
-        self.assertEqual(response.status_code, 302)
-        # self.assertTemplateUsed(response, 'case/case.html')
 
     def test_CaseInfo_Cases_ListView(self):
         case = Case.objects.latest('pk')
@@ -106,16 +95,3 @@ class TestCaseView(TestCase):
         case_info = self.case_info1
         response = self.client.get(reverse('case:revisit-case-new', args=[case_info.id]))
         self.assertEqual(response.status_code, 302)  # redirect til login
-
-    def test_details(self):
-        # Create a instance af en GET request.
-        case = Case.objects.latest('pk')
-        request = self.factory.get('case/caseinfo/cases', args=[case.case_info.id])
-        # Minde om at middleware ikke understøttes. Man kan simulere
-        # en logget bruger ved at indstille request.user manuelt.
-        request.user = self.user
-        # Eller man kan simulere en anonym bruger ved at indstille request.user til et anonymt brugereksempel.
-        request.user = AnonymousUser()
-        self.detail_url = reverse('case:case-create-new', args=[case.case_info.id])
-        response = self.client.get(self.detail_url, HTTP_HOST='127.0.0.1:8000')
-        self.assertEqual(response.status_code, 302)  # redirect til login side
