@@ -127,12 +127,14 @@ class RevisitLoginView(FormView):
             return render(request, self.template_name, context)
         try:
             case_info = CaseInfo.objects.get(guid=guid)
-            context = {'case_info': case_info}
-            request.session['case_guid'] = 'valid'
-            case_create_url = reverse('case:revisit-report', args=[case_info.id])
-            return redirect(case_create_url, context)
-        except Company.DoesNotExist:
+        except CaseInfo.DoesNotExist:
             return redirect('case:report-login')
+
+        context = {'case_info': case_info}
+        request.session['case_guid'] = 'valid'
+        case_create_url = reverse('case:revisit-report', args=[case_info.id])
+        return redirect(case_create_url, context)
+
 
 
 class RevisitCaseInfoView(ListView):
