@@ -152,7 +152,8 @@ class RevisitCaseInfoView(ListView):
                     del self.request.session['case_guid']
                     self.request.session['info_guid'] = 'valid'
                     return context
-                except Company.DoesNotExist:
+
+                except Exception:
                     return redirect('case:report-login')
             else:
                 return redirect(reverse('case:report-login'))

@@ -1,95 +1,140 @@
-from django.test import TestCase, Client
-from case.models import Case, CaseInfo, Status
-from caseworker.models import Company, Country, PostalCode, Address
-from django.urls import reverse
-import uuid
-from case.forms import AnonymousForm
+from django import urls
+import pytest
+from django.contrib.auth import get_user_model
+from case.models import CaseInfo, Case
+from django.conf import settings
 
 
-class TestCaseView(TestCase):
+url_data = [
+    ('case:caseinfo-view', 302),
+    ('case:report-login', 200),
+    ('case:revisit-login', 200),
+]
 
-    def setUp(self):
-        self.client = Client()
-        self.guid = uuid.uuid4()
-        self.country_name1 = Country.objects.create(name='Denmark')
-        self.postal_code1 = PostalCode.objects.create(
-            post_code='2100', city_name='copenhagen', country=self.country_name1
-        )
+# Test med toggle-feature enable
+settings.FEATURES['REVISIT_CASE'] = True
 
-        self.address1 = Address.objects.create(street='street1', post_code=self.postal_code1)
-        self.company1 = Company.objects.create(name='company1', address=self.address1)
-        self.status1 = Status.objects.create()
-        self.case_info1 = CaseInfo.objects.create(status=self.status1, company=self.company1)
-        self.case_info1.save()
-        self.case1 = Case.objects.create(title='Title 1', description='Description 1', case_info=self.case_info1)
-        self.case1.save()
 
-    def test_CaseInfo_Cases_ListView(self):
-        case = Case.objects.latest('pk')
-        self.detail_url = reverse('case:case-create-new', args=[case.case_info.id])
-        response = self.client.get(self.detail_url)
-        self.assertEqual(response.status_code, 302)  # redirect til login side
+@pytest.mark.parametrize("url, expected", url_data)
+def test_case_views(client, url, expected):
+    temp_url = urls.reverse(url)
+    resp = client.get(temp_url)
+    assert resp.status_code == expected
 
-    def test_CaseInfo_DeleteView(self):
-        case_info = CaseInfo.objects.latest('pk')
-        self.detail_url = reverse('case:caseinfo-delete', args=[case_info.id])
-        response = self.client.get(self.detail_url)
-        self.assertEqual(response.status_code, 302)
 
-    def test_CaseInfoUpdateView(self):
-        case = Case.objects.latest('pk')
-        self.detail_url = reverse('case:caseinfo-update', args=[case.case_info.id])
-        response = self.client.post(self.detail_url, {
-            'status': self.status1,
-            'company': self.company1,
+@pytest.mark.django_db
+def test_user_login(client, user_data_for_login, create_user_for_login):
+    user_model = get_user_model()
+    assert user_model.objects.count() == 1  # Når vi kalder create_user_model in i modelen opreetter vi en user
+    login_url = urls.reverse('caseworker:login')
+    resp = client.post(login_url, data=user_data_for_login)  # Her poster en login-data til login-side
+    assert resp.status_code == 302
+    assert resp.url == urls.reverse('case:caseinfo-view')  # Når man logger ind så bliver man redirected til "/case/"
+
+
+@pytest.mark.django_db
+def test_Login_CaseInfo_Cases_ListView(client, user_data_for_login, create_user_for_login, case_info_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:caseinfo-cases-view', kwargs={'id': case_info.id})  # Se sagerne under en sagsinfo
+    resp = client.get(user_url)
+    assert resp.status_code == 200   # Fordi vi er logget ind bliver vi ikke redirectet
+    assert "Go back" in str(resp.content)
+
+
+@pytest.mark.django_db
+def test_Login_CaseInfo_Delete(client, user_data_for_login, create_user_for_login, case_info_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:caseinfo-delete', kwargs={'pk': case_info.id})  # Se sagerne under en sagsinfo
+    resp = client.post(user_url)
+    assert resp.status_code == 302   # bliver
+    assert resp.url == urls.reverse('case:caseinfo-view')  # Tjekkes at at de home view som viser alle caseinfo
+
+
+@pytest.mark.django_db
+def test_Login_CaseInfo_Update(client, user_data_for_login, create_user_for_login, case_info_data, status_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:caseinfo-update', kwargs={'pk': case_info.id})  # Vælges case-info for at update
+    resp = client.post(user_url, {
+            'caseworker': create_user_for_login.id,
+            'status': status_data.id,
         })
-        self.assertEqual(response.status_code, 200)
+    assert resp.status_code == 302  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert resp.url == urls.reverse('case:caseinfo-view')  # Home view
 
-    def test_Case_new_CreateView_Post(self):
-        case = Case.objects.latest('pk')
-        self.detail_url = reverse('case:caseinfo-cases-view', args=[case.case_info.id])
-        response = self.client.post(self.detail_url, {
+
+@pytest.mark.django_db
+def test_Case_New_CreateView_Post(client, user_data_for_login, create_user_for_login, case_info_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:case-create-new', kwargs={'id': case_info.id})  # Vælges case-info for at update
+    resp = client.post(user_url, {
             'title': 'Unit test case title 1',
             'description': 'Unit test case description 1',
         })
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/accounts/login/?next=" + self.detail_url)  # fordi vi ikke har logget ind
+    assert resp.status_code == 302  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert resp.url == urls.reverse('case:caseinfo-view')  # Home view
 
-    def test_Case_DetailView_Post(self):
-        case = Case.objects.latest('pk')
-        self.detail_url = reverse('case:case-detail', args=[case.id])
-        response = self.client.get(self.detail_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/accounts/login/?next=" + self.detail_url)
-        self.assertEqual(self.case1.case_info.company.name, 'company1')
 
-    def test_Case_DeleteView(self):
-        case = Case.objects.latest('pk')
-        self.delete_url = reverse('case:case-delete', args=[case.id])
-        response = self.client.get(self.delete_url)
-        self.assertEqual(response.url, "/accounts/login/?next=" + self.delete_url)
-        self.assertEqual(response.status_code, 302)
+@pytest.mark.django_db
+def test_Case_DetailView_Get(client, user_data_for_login, create_user_for_login, case_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)  # Her logger vi ind
 
-    def test_Report_LoginView(self):
-        self.detail_url = reverse('case:report-login')
-        response = self.client.get(self.detail_url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'case/report_login.html')
+    case = Case.objects.latest('pk')
+    user_url = urls.reverse('case:case-detail', kwargs={'pk': case.pk})  # Vælges case-info for at update
+    resp = client.get(user_url)
+    assert resp.status_code == 200  # Efter at update caseinfoen,  bliver redirectet til home view
+    assert "Title 1" in str(resp.content)
 
-    def test_ReportCreateView(self):
-        self.detail_url = reverse('case:new-report', args=[self.case_info1.id])
-        response = self.client.get(self.detail_url)
-        self.assertEqual(response.url, "/case/login/")  # Den bliver redirect til login side fordi mangler session
-        self.assertEqual(response.status_code, 302)
 
-    def test_RevisitLoginViewWithValidData(self):
-        data = {"case_info": self.case_info1}
-        form = AnonymousForm(data=data)
-        response = self.client.get(reverse('case:revisit-login'), args=[self.case_info1.id, form])
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'case/revisit_login.html')
+@pytest.mark.django_db
+def test_ReportCreateView_Post(client,  case_info_data):
+    session = client.session
+    session['cmp_guid'] = 'valid'
+    session.save()
 
-    def test_RevisitCaseNewCreateView(self):
-        case_info = self.case_info1
-        response = self.client.get(reverse('case:revisit-case-new', args=[case_info.id]))
-        self.assertEqual(response.status_code, 302)  # redirect til login
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:new-report', kwargs={'id': case_info.id})  # oprettes en caseinfo for at kanne report
+    resp = client.get(user_url)
+    assert resp.status_code == 200  #
+    assert "Anmeldelse" in str(resp.content)
+
+
+@pytest.mark.django_db
+def test_RevisitLoginView(client, case_info_data):
+    user_url = urls.reverse('case:revisit-login')
+    resp = client.get(user_url)
+    assert resp.status_code == 200
+    assert "form" in str(resp.content)
+
+
+@pytest.mark.django_db
+def test_RevisitCaseInfoView(client, case_info_data):
+    session = client.session
+    session['case_guid'] = 'valid'
+    session.save()
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:revisit-report', kwargs={'id': case_info.id})  # Vælges case-info for at update
+    resp = client.get(user_url)
+    assert resp.status_code == 200  # Den bliver ikke redirecti til login gense og case info fundet.
+    assert "Information om din anmedelse" in str(resp.content)
+
+
+@pytest.mark.django_db
+def test_RevisitCaseNewCreateView(client, case_info_data):
+    session = client.session
+    session['info_guid'] = 'valid'
+    session.save()
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:revisit-case-new', kwargs={'id': case_info.id})  # Vælges case-info for at update
+    resp = client.get(user_url)
+    assert resp.status_code == 200  # Den bliver ikke redirecti til login gense og case info fundet.
+    assert "Anmeldelse" in str(resp.content)
