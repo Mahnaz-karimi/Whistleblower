@@ -136,7 +136,6 @@ class RevisitLoginView(FormView):
         return redirect(case_create_url, context)
 
 
-
 class RevisitCaseInfoView(ListView):
     model = CaseInfo
     template_name = 'case/revisit_report.html'
