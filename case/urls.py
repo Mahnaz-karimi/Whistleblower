@@ -16,7 +16,7 @@ urlpatterns = [
 
     path('<int:id>/new/report/', ReportCreateView.as_view(), name='new-report'),
     path('login/', ReportLoginView.as_view(), name='report-login'),
-    path('post/<int:pk>/update/', CaseInfoUpdateView.as_view(), name='case-update'),
+    path('post/<int:pk>/update/', CaseInfoUpdateView.as_view(), name='caseinfo-update'),
     path('login/revisit/', RevisitLoginView.as_view(), name='revisit-login'),
     path('<int:id>/revisit/report/', RevisitCaseInfoView.as_view(), name='revisit-report'),
     path('<int:id>/revisit/new/', RevisitCaseNewCreateView.as_view(), name='revisit-case-new'),

@@ -1,6 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
-from case.models import Case, CaseInfo, Status
+from case.models import CaseInfo, Status
 from caseworker.models import Company, Country, PostalCode, Address
 
 
@@ -37,7 +37,10 @@ def case_info_data():
     return case_info
 
 
+'''
 @pytest.fixture
 def case_data():
-    case = Case.objects.create(title='Title 1', description='Description 1', case_info=case_info_data)
+    case = Case.objects.create(title='Title 1', description='Description 1',
+     case_info=case_info_data().id)
     return case
+'''

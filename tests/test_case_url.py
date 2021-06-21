@@ -38,14 +38,23 @@ def test_Login_CaseInfo_Cases_ListView(client, user_data_for_login, create_user_
 
 
 @pytest.mark.django_db
-def test_Login_CaseInfo_Delete_View(client, user_data_for_login, create_user_for_login, case_info_data):
-    user_model = get_user_model()
-    assert user_model.objects.count() == 1  # Når vi kalder create_user_model in i modelen opreetter vi en user
-    login_url = urls.reverse('caseworker:login')
-    resp = client.post(login_url, data=user_data_for_login)  # Her poster en login-data til login-side
-    assert resp.status_code == 302
-    assert resp.url == urls.reverse('case:caseinfo-view')
+def test_Login_CaseInfo_Delete(client, user_data_for_login, create_user_for_login, case_info_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)
+
     case_info = CaseInfo.objects.latest('pk')
     user_url = urls.reverse('case:caseinfo-delete', kwargs={'pk': case_info.id})  # Se sagerne under en sagsinfo
     resp = client.get(user_url)
     assert resp.status_code == 200   # Fordi vi er logget ind
+
+
+@pytest.mark.django_db
+def test_Login_CaseInfo_Update(client, user_data_for_login, create_user_for_login, case_info_data):
+    test_user_login(client, user_data_for_login, create_user_for_login)
+
+    case_info = CaseInfo.objects.latest('pk')
+    user_url = urls.reverse('case:caseinfo-update', kwargs={'pk': case_info.id})  # Se sagerne under en sagsinfo
+    resp = client.post(user_url, {
+            'status': case_info_data.status,
+            'company': case_info_data.company,
+        })
+    assert resp.status_code == 200
