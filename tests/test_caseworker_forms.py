@@ -64,3 +64,4 @@ class TestForms(TestCase):
         form = CaseworkerAdmin(data={'email': 'mahnaazi@yahoo.com'})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 3)  # der skulle være tre fejl fordi vi har givet en data
+

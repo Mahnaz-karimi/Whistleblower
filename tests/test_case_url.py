@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from case.models import CaseInfo, Case
 from django.conf import settings
 
+
 url_data = [
     ('case:caseinfo-view', 302),
     ('case:report-login', 200),

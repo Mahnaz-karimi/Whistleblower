@@ -35,7 +35,6 @@ jobs:
       AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
       REVISIT_CASE: True
       EDIT_CASE: True
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.9

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 
+
 app_name = "case"
 urlpatterns = [
     path('', login_required(CaseInfoListView.as_view()), name='caseinfo-view'),
@@ -28,3 +29,4 @@ if settings.FEATURES.get('REVISIT_CASE'):
     urlpatterns.append(path('login/revisit/', RevisitLoginView.as_view(), name='revisit-login'))
     urlpatterns.append(path('<int:id>/revisit/report/', RevisitCaseInfoView.as_view(), name='revisit-report'))
     urlpatterns.append(path('<int:id>/revisit/new/', RevisitCaseNewCreateView.as_view(), name='revisit-case-new'))
+

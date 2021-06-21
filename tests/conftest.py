@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+
 from case.models import CaseInfo, Status, Case
 from caseworker.models import Company, Country, PostalCode, Address
 

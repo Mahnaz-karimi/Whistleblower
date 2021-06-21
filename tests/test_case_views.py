@@ -9,7 +9,6 @@ from case.forms import AnonymousForm
 class TestCaseView(TestCase):
 
     def setUp(self):
-
         self.client = Client()
         self.guid = uuid.uuid4()
         self.country_name1 = Country.objects.create(name='Denmark')
@@ -55,7 +54,7 @@ class TestCaseView(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/accounts/login/?next=" + self.detail_url)  # fordi vi ikke har logget ind
-        # self.assertTemplateUsed(response, 'case/case_new_caseworker.html')
+
 
     def test_Case_DetailView_Post(self):
         case = Case.objects.latest('pk')

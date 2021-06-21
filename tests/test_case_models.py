@@ -9,6 +9,7 @@ class CaseModelTest(TestCase):
 
     def setUp(self):
         self.client = Client()
+
         self.country_name1 = Country.objects.create(name='Denmark')
         self.postal_code1 = PostalCode.objects.create(post_code='2500', city_name='bynavn', country=self.country_name1)
         self.address1 = Address.objects.create(street='adress 14', post_code=self.postal_code1)
@@ -41,6 +42,7 @@ class CaseModelTest(TestCase):
 
     # Test that __str__ is implemented on Case
     def test_case_title(self):
+
         self.assertEqual(self.case1.title, 'Title 1')
 
     # Test that created is set to today on Case
@@ -63,3 +65,4 @@ class CaseModelTest(TestCase):
 
     def test_case1_title(self):
         self.assertEqual(str(self.case1), "Title 1")
+

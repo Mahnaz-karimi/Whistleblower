@@ -151,8 +151,6 @@ GRAPH_MODELS = {
 
 LOGIN_REDIRECT_URL = '/case/'
 
-# REVISIT_CASE = False
-
 # Feature toggles
 FEATURES = {}
 if os.path.exists('/etc/features.json'):

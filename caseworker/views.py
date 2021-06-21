@@ -1,7 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, reverse
-from django.contrib import messages
-from caseworker.forms import CaseworkerAdmin
+from django.shortcuts import reverse
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
@@ -9,6 +7,9 @@ from django.views.generic import (
 )
 from django.contrib.auth import views as auth_views
 from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from caseworker.forms import CaseworkerAdmin
 
 
 @login_required
