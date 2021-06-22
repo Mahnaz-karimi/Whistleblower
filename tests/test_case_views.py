@@ -11,7 +11,7 @@ url_data = [
     ('case:revisit-login', 200),
 ]
 
-# Test med toggle-feature enable
+# Test med toggle-feature enabled
 settings.FEATURES['REVISIT_CASE'] = True
 
 
