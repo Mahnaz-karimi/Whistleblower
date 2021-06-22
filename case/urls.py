@@ -8,6 +8,7 @@ from django.conf import settings
 
 app_name = "case"
 urlpatterns = [
+
     path('', login_required(CaseInfoListView.as_view()), name='caseinfo-view'),
     path('<int:pk>/delete/caseinfo/', login_required(CaseInfoDeleteView.as_view()), name='caseinfo-delete'),
     path('post/<int:pk>/update/', CaseInfoUpdateView.as_view(), name='caseinfo-update'),

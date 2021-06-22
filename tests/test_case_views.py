@@ -2,7 +2,7 @@ from django import urls
 import pytest
 from django.contrib.auth import get_user_model
 from case.models import CaseInfo, Case
-from django.conf import settings
+# from django.conf import settings
 
 
 url_data = [
@@ -12,7 +12,7 @@ url_data = [
 ]
 
 # Test med toggle-feature enable
-settings.FEATURES['REVISIT_CASE'] = True
+# settings.FEATURES['REVISIT_CASE'] = True
 
 
 @pytest.mark.parametrize("url, expected", url_data)
