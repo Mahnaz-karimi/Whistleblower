@@ -105,7 +105,8 @@ class ReportCreateView(CreateView):
         if 'cmp_guid' in self.request.session:
             if self.request.session['cmp_guid'] == 'valid':
                 del request.session['cmp_guid']
-                return render(request, 'case/report_form.html')
+                context = {"case_info": get_object_or_404(CaseInfo, id=self.kwargs['id'])}
+                return render(request, 'case/report_form.html', context)
         else:
             return redirect(reverse('case:report-login'))
 
@@ -146,7 +147,7 @@ class RevisitCaseInfoView(ListView):
                 try:
                     context = super().get_context_data(**kwargs)
                     self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
-                    context['case_info'] = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+                    context['case_info'] = self.CaseInfo
                     context['cases'] = Case.objects.filter(case_info=self.CaseInfo.id).order_by('-created')
                     context['deletable'] = (str(self.CaseInfo.status) == Status.CASESTATUS[0][1])
                     del self.request.session['case_guid']
@@ -172,6 +173,6 @@ class RevisitCaseNewCreateView(CreateView):
             return redirect(reverse('case:report-login'))
 
     def form_valid(self, form):
-        case_info = get_object_or_404(CaseInfo, id=self.kwargs['id'])
-        form.instance.case_info = case_info
+        self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+        form.instance.case_info = self.CaseInfo
         return super(RevisitCaseNewCreateView, self).form_valid(form)
