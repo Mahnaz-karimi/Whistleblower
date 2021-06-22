@@ -25,7 +25,7 @@ urlpatterns = [
 ]
 
 
-if settings.FEATURES.get('REVISIT_CASE'):
+if settings.FEATURES.get('REVISIT_CASE'):  # Feature toggle
     urlpatterns.append(path('login/revisit/', RevisitLoginView.as_view(), name='revisit-login'))
     urlpatterns.append(path('<int:id>/revisit/report/', RevisitCaseInfoView.as_view(), name='revisit-report'))
     urlpatterns.append(path('<int:id>/revisit/new/', RevisitCaseNewCreateView.as_view(), name='revisit-case-new'))

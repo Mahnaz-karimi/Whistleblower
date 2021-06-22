@@ -41,5 +41,5 @@ class LoginView(auth_views.LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['revisible'] = settings.FEATURES.get('REVISIT_CASE')
+        context['revisible'] = settings.FEATURES.get('REVISIT_CASE')  # FEATURE TOGGLE
         return context

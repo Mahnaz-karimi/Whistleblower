@@ -2,20 +2,17 @@ from django import urls
 import pytest
 from django.contrib.auth import get_user_model
 from case.models import CaseInfo, Case
-from django.conf import settings
 
 
+# Data til data-drevet test
 url_data = [
     ('case:caseinfo-view', 302),
     ('case:report-login', 200),
     ('case:revisit-login', 200),
 ]
 
-# Test med toggle-feature enabled
-settings.FEATURES['REVISIT_CASE'] = True
 
-
-@pytest.mark.parametrize("url, expected", url_data)
+@pytest.mark.parametrize("url, expected", url_data)  # Data-drevet test
 def test_case_views(client, url, expected):
     temp_url = urls.reverse(url)
     resp = client.get(temp_url)

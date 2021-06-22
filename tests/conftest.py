@@ -1,8 +1,12 @@
 import pytest
 from django.contrib.auth import get_user_model
-
 from case.models import CaseInfo, Status, Case
 from caseworker.models import Company, Country, PostalCode, Address
+from django.conf import settings
+
+
+# Test med toggle-feature enabled
+settings.FEATURES['REVISIT_CASE'] = True
 
 
 @pytest.fixture
