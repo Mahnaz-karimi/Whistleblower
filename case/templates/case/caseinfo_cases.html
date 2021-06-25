@@ -5,7 +5,7 @@
             <div class="media-body">
                 <div class="article-metadata">
 
-                    <p><small class="text-muted">{{ case.created|date:"F d, Y" }}</small></p>
+                    <p><small class="media content-section">{{ case.created|date:"F d, Y" }}</small></p>
                 </div>
                 <h10><a class="article-title" href="{% url 'case:case-detail' case.id %}"> Firmanavn : {{case.case_info.company}}</a></h10>
                 <p> Sagens titel:  {{case.title}}</p>
