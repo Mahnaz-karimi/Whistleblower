@@ -1,9 +1,11 @@
+from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from case.models import Case, Status, CaseInfo, Company
 from django.shortcuts import redirect, render
 from case.forms import AnonymousForm
 from django.urls import reverse
 from django.conf import settings
+from django.views.generic import RedirectView
 from django.views.generic import (
     FormView,
     ListView,
@@ -154,10 +156,10 @@ class RevisitCaseInfoView(ListView):
                     self.request.session['info_guid'] = 'valid'
                     return context
 
-                except Exception:
-                    return redirect('case:report-login')
-            else:
-                return redirect(reverse('case:report-login'))
+                except not self.request.session['case_guid']:
+                    return redirect(reverse('case:report-login'))
+        else:
+            raise Http404()
 
 
 class RevisitCaseNewCreateView(CreateView):
