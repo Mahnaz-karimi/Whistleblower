@@ -5,10 +5,11 @@ import dj_database_url
 # import storages.backends.s3boto3
 
 
-if os.path.exists('/etc/config.json'):
-    with open('/etc/config.json') as config_file:
+if os.path.exists('C:/json/config.json'):
+    with open('C:/json/config.json') as config_file:
         config = json.load(config_file)
         SECRET_KEY = config.get('SECRET_KEY')
+
         AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
         AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
@@ -153,8 +154,9 @@ LOGIN_REDIRECT_URL = '/case/'
 
 # Feature toggles
 FEATURES = {}
-if os.path.exists('/etc/features.json'):
-    with open('/etc/features.json') as feature_file:
+if os.path.exists('C:/json/features.json'):
+    with open('C:/json/features.json') as feature_file:
         FEATURES = json.load(feature_file)
+        print(f"FEATURES: {FEATURES}")
 elif 'FEATURES' in os.environ:
     FEATURES = json.loads(os.environ.get('FEATURES'))
