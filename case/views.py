@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from django.shortcuts import get_object_or_404
 from case.models import Case, Status, CaseInfo, Company
 from django.shortcuts import redirect, render
@@ -154,10 +155,11 @@ class RevisitCaseInfoView(ListView):
                     self.request.session['info_guid'] = 'valid'
                     return context
 
-                except Exception:
-                    return redirect('case:report-login')
-            else:
-                return redirect(reverse('case:report-login'))
+                except:
+                    raise Http404()
+
+        else:
+            raise Http404()
 
 
 class RevisitCaseNewCreateView(CreateView):
