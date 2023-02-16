@@ -30,23 +30,26 @@
 - python manage.py runserver
 - python manage.py collectstatic
 
+##### Django generation of secret key
+- python manage.py shell
 
+##### In shell
+> <>from django.core.management.utils import get_random_secret_key                       
+> <>print(get_random_secret_key()) 
 
-### Installation of Heroku
-- In site of heroku website install heroku https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli , 
-the path should be in environment variable.
-#### To change or access to the heroku app
-- heroku info <app-name>
-- heroku git:remote -a app-name
 
 ### Git commands 
 
 ##### For push changing on other branch
 - git pull origin master
+- git push --set-upstream origin integration
 
-### Django generation of secret key
-- python manage.py shell
-#### In shell
-> <>from django.core.management.utils import get_random_secret_key                       
-> <>print(get_random_secret_key()) 
 
+### Installation of Heroku
+- In site of heroku website install heroku 
+https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli  
+the path should be in environment variable.
+#### To change or access to the heroku app
+- heroku login
+- heroku info <app-name>
+- heroku git:remote -a app-name
