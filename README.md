@@ -1,7 +1,8 @@
 # Whistle_blower
 
 ### First you need to install python 3 and pip 
->> For windows https://www.geeksforgeeks.org/how-to-install-pip-on-windows/
+
+For windows https://www.geeksforgeeks.org/how-to-install-pip-on-windows/
 
 ### Django virtual machine activation
 
@@ -62,6 +63,9 @@ git pull origin master
 git push --set-upstream origin integration
 ```
 
+```
+git remote -v
+```
 
 ### Installation of Heroku
 ```
@@ -84,9 +88,6 @@ heroku info <app-name>
 heroku git:remote -a app-name
 ```
 
-```
-git remote -v
-```
 
 ### To deploy the project to the heroku websites via different branches
 
