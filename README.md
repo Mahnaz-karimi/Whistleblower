@@ -25,8 +25,10 @@ source ./venv/Scripts/activate
  ```
 ```
  pip freeze
- ```
-
+```
+```
+pip freeze > requirements.txt
+```
 #### In pycharm terminal
 ```
 - pip install --upgrade pip --user 
@@ -41,17 +43,23 @@ source ./venv/Scripts/activate
 - python manage.py runserver
 - python manage.py collectstatic
 ```
-##### Django generation of secret key
+### Django generation of secret key
+
 ```
 python manage.py shell
 ```
 
 ##### In shell
 ```
->>from django.core.management.utils import get_random_secret_key                       
->>print(get_random_secret_key()) 
+>>> from django.core.management.utils import get_random_secret_key                       
+>>> print(get_random_secret_key()) 
 ```
-
+##### for generation of secret key by Token_hex(24)
+```
+python
+>>> import secrets
+>>> secrets.token_hex(24)
+```
 ### Git commands 
 
 ##### For push changing on other branch
@@ -66,8 +74,9 @@ git push --set-upstream origin integration
 ```
 git remote -v
 ```
+## Heroku 
 
-### Installation of Heroku
+#### Installation of Heroku
 ```
 Heroku website install heroku 
 https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli  
@@ -89,7 +98,7 @@ heroku git:remote -a app-name
 ```
 
 
-### To deploy the project to the heroku websites via different branches
+#### To deploy the project to the heroku websites via different branches
 
 ```
 git push heroku master
@@ -97,10 +106,35 @@ git push heroku master
 ```
 git push heroku branch-name:master    
 ```
-### To integration the project to the heroku 
+#### To integrate the project to database on heroku
 ```
 heroku run python manage.py migrate
 ```
 ```
 heroku run python manage.py collectstatic
+```
+#### To see database name on Heroku
+```
+heroku addons 
+```
+```
+heroku open
+```
+```
+heroku config:set AWS_STORAGE_BUCKET_NAME="AWS_STORAGE_BUCKET_NAME" 
+```
+```
+heroku config:set EMAIL_USER="email@emai.com"
+```
+```
+heroku config:set EMAIL_PASSWORD="email@emai.com"
+```
+#### To create superuser on postgres database on Heroku
+```
+heroku run bash
+~ $ python manage.py createsuperuser
+```
+#### Managing SSH keys
+```
+https://devcenter.heroku.com/articles/keys#add-keys-to-a-heroku-account
 ```
