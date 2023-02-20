@@ -31,17 +31,17 @@ pip freeze > requirements.txt
 ```
 #### In pycharm terminal
 ```
-- pip install --upgrade pip --user 
-- pip install -r requirements.txt --user 
-- python -m pip install --upgrade pillow 
-- python.exe -m pip install --upgrade pip
-- python -m pip install psycopg2 
+pip install --upgrade pip --user 
+pip install -r requirements.txt --user 
+python -m pip install --upgrade pillow 
+python.exe -m pip install --upgrade pip
+python -m pip install psycopg2 
 
-- python manage.py makemigrations
-- python manage.py migrate
-- python manage.py createsuperuser
-- python manage.py runserver
-- python manage.py collectstatic
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+python manage.py collectstatic
 ```
 ### Django generation of secret key
 
@@ -134,7 +134,13 @@ heroku config:set EMAIL_PASSWORD="email@emai.com"
 heroku run bash
 ~ $ python manage.py createsuperuser
 ```
-#### Managing SSH keys
+#### To generate SSH keys
 ```
-https://devcenter.heroku.com/articles/keys#add-keys-to-a-heroku-account
+heroku keys:add
+For more information -> https://devcenter.heroku.com/articles/keys#add-keys-to-a-heroku-account
+```
+#### To display the token via the CLI
+```
+heroku auth:token
+heroku config:set HEROKU_API_TOKEN ="xxxxx-xxxx-xxx-xxxxxx-xxxxx"
 ```
