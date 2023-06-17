@@ -14,7 +14,6 @@ from django.views.generic import (
     UpdateView,
 )
 
-
 class CaseInfoListView(ListView):
     model = CaseInfo
     template_name = 'case/caseinfo.html'
@@ -177,4 +176,13 @@ class RevisitCaseNewCreateView(CreateView):
     def form_valid(self, form):
         self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
         form.instance.case_info = self.CaseInfo
-        return super(RevisitCaseNewCreateView, self).form_valid(form)
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['static_files'] = {
+            'file_saver_js': 'js/FileSaver.js'
+        }
+        context['user_text'] = self.request.POST.get('text')  # Assuming you have a form field named 'text'
+        print ("helooo", context['user_text'])
+        return context
