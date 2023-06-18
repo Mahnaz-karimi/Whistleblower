@@ -5,6 +5,11 @@ from django.shortcuts import redirect, render
 from case.forms import AnonymousForm
 from django.urls import reverse
 from django.conf import settings
+import threading
+import time
+from pathlib import Path
+import os
+from django.http import HttpResponse
 from django.views.generic import (
     FormView,
     ListView,
@@ -170,19 +175,65 @@ class RevisitCaseNewCreateView(CreateView):
             if self.request.session['info_guid'] == 'valid':
                 del request.session['info_guid']
                 return render(request, 'case/revisit_case_new.html')
-        else:
-            return redirect(reverse('case:report-login'))
+            else:
+                return redirect(reverse('case:report-login'))
 
-    def form_valid(self, form):
+
+    def form_valid(self, form ):
         self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
         form.instance.case_info = self.CaseInfo
+
+        title = form.cleaned_data['title']
+        description = form.cleaned_data['description']
+
+        filename = f"{self.CaseInfo.guid}.txt" if self.CaseInfo.guid else "anonymous.txt"
+
+        # Get the user's home directory
+        home_dir = str(Path.home())
+        # Construct the path to the documents folder
+        documents_path = os.path.join(home_dir, 'Documents')
+
+        # Write the initial title and description to a file
+        file_path = os.path.join(documents_path, filename)
+
+        update_file_content(file_path, title, description)
+
+
+        print ( " Hfkfjgkfdjgs ", retrieve_file_content(file_path))
+
+        # Start a background thread to update the file periodically
+        thread = threading.Thread(target=overwrite_file_periodically, args=(file_path, title, description))
+        thread.start()
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['static_files'] = {
-            'file_saver_js': 'js/FileSaver.js'
-        }
-        context['user_text'] = self.request.POST.get('text')  # Assuming you have a form field named 'text'
-        print ("helooo", context['user_text'])
+        self.CaseInfo = get_object_or_404(CaseInfo, id=self.kwargs['id'])
+        filename = f"{self.CaseInfo.guid}.txt" if self.CaseInfo.guid else "anonymous.txt"
+        home_dir = str(Path.home())
+        documents_path = os.path.join(home_dir, 'Documents')
+        file_path = os.path.join(documents_path, filename)
+        file_content = retrieve_file_content(file_path)
+        print ("HHHHHHH", file_content)
+        context['file_content'] = file_content
+
         return context
+
+def retrieve_file_content(file_path):
+    with open(file_path, 'r') as file:
+        content = file.read()
+    return content
+
+def update_file_content(file_path, title, description):
+    with open(file_path, 'w') as file:
+        file.write(f"Title: {title}\nDescription: {description}")
+
+# Define a function to be called periodically
+def overwrite_file_periodically(file_path, title, description):
+    # Initial file update
+    update_file_content(file_path, title, description)
+
+    # Wait for 1-second and update the file again
+    time.sleep(1)
+    overwrite_file_periodically(file_path, title, description)
