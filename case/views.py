@@ -196,11 +196,6 @@ class RevisitCaseNewCreateView(CreateView):
         # Write the initial title and description to a file
         file_path = os.path.join(documents_path, filename)
 
-        update_file_content(file_path, title, description)
-
-
-        print ( " Hfkfjgkfdjgs ", retrieve_file_content(file_path))
-
         # Start a background thread to update the file periodically
         thread = threading.Thread(target=overwrite_file_periodically, args=(file_path, title, description))
         thread.start()
@@ -215,7 +210,7 @@ class RevisitCaseNewCreateView(CreateView):
         documents_path = os.path.join(home_dir, 'Documents')
         file_path = os.path.join(documents_path, filename)
         file_content = retrieve_file_content(file_path)
-        print ("HHHHHHH", file_content)
+        print ("file_content", file_content)
         context['file_content'] = file_content
 
         return context
